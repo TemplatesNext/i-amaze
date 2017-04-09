@@ -1,7 +1,7 @@
 Theme Name: i-amaze
-Theme URI: http://templatesnext.org/iamaze/
+Theme URI: http://templatesnext.in/i-amaze-landing/
 Author: templatesnext team
-Author URI: http://templatesnext.org/
+Author URI: http://templatesnext.in/
 Description: The i-amaze theme for WordPress is packed with fetures like unlimited color, boxed/wide layout, services, portfolio/works/projects masonry and carousel format, blog masonry and carousel, testimonials, etc. It comes with custom slider and option to use any 3rd party slider in any page or post through page/post meta option. Perfect for start-up business.
 Version: 1.0.1
 License: GNU General Public License v2 or later
