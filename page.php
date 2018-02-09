@@ -26,7 +26,7 @@ get_header(); ?>
 						<div class="entry-thumbnail">
 						<?php                        
 							$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-							echo '<a href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="" class="tx-colorbox">';
+							echo '<a href="' . esc_url($large_image_url[0]) . '" title="' . esc_attr(the_title_attribute( 'echo=0' )) . '" class="tx-colorbox">';
 							the_post_thumbnail('iamaze-single-thumb');
 							echo '</a>';
                         ?>
@@ -37,11 +37,11 @@ get_header(); ?>
 
 					<div class="entry-content">
 						<?php the_content(); ?>
-						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'i-amaze' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . esc_attr__( 'Pages:', 'i-amaze' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
 					</div><!-- .entry-content -->
 
 					<footer class="entry-meta">
-						<?php edit_post_link( __( 'Edit', 'i-amaze' ), '<span class="edit-link">', '</span>' ); ?>
+						<?php edit_post_link( esc_attr__( 'Edit', 'i-amaze' ), '<span class="edit-link">', '</span>' ); ?>
 					</footer><!-- .entry-meta -->
 				</article><!-- #post -->
 

@@ -6,8 +6,8 @@ Description: The i-amaze theme for WordPress is packed with fetures like unlimit
 Version: 1.0.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: black, red, green, purple, white, yellow, light, blue, one-column, two-columns, right-sidebar, fluid-layout, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, sticky-post, translation-ready
-Text Domain: iamaze
+Tags: one-column, two-columns, right-sidebar, fluid-layout, custom-header, custom-menu, editor-style, featured-images, sticky-post, translation-ready
+Text Domain: i-amaze
 
 == Installation ==
 
@@ -25,9 +25,18 @@ Activiation and Use
 Unless otherwise specified, all the theme files, scripts and images
 are licensed under GNU General Public License version 2 or later, see file license.txt.
 
+== Descriptions ==
+
+Additional templates used
+page-sidebar.php : Page Template with no sidebar for widgets
+single-portfolio.php : Post type portfolio pages
+woocommerce.php : WooCommerce page containers
+
+
 /*  Other Licenses
 /* ------------------------------------ */
 * The Font Genericons is licensed under GPL
+* The Google Fonts are open source fonts
 * The style animate.css is licensed under MIT
 * the script jQuery OwlCarousel is licensed under MIT
 * The script jquery.sidr.min.js is licensed under MIT
@@ -46,6 +55,3 @@ http://pixabay.com/en/board-wood-grey-grain-texture-503944/
 http://pixabay.com/en/girl-young-blue-eyes-eyes-look-510448/
 http://pixabay.com/en/background-black-funds-wood-plate-269933/
 https://pixabay.com/en/freelancer-apple-imac-iphone-763730/
-
-== License ==
-Since the main navigational area is floating on top, too many menu items creating additional lines will cover the main content area.

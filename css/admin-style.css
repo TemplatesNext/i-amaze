@@ -104,8 +104,6 @@ li.customize-control {
 	width: calc(100% - 12px);
 }
 
-
-
 .kirki-codemirror-editor expanded {
 	display: block!important;
 	height: auto!important;
@@ -138,7 +136,3 @@ li.customize-control {
 	background-color: #373737;
 	color: #fff;
 }
-
-
-
-

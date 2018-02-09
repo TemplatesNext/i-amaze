@@ -3,8 +3,6 @@
 function iamaze_customizer_config() {
 	
 
-    $url  = get_stylesheet_directory_uri() . '/inc/kirki/';
-	
     /**
      * If you need to include Kirki in your theme,
      * then you may want to consider adding the translations here
@@ -60,7 +58,7 @@ function iamaze_customizer_config() {
   
         // Change the logo image. (URL) Point this to the path of the logo file in your theme directory
                 // The developer recommends an image size of about 250 x 250
-        //'logo_image'   => get_template_directory_uri() . '/images/logo.png',
+        'logo_image'   => get_template_directory_uri() . '/images/logo.png',
   
         // The color of active menu items, help bullets etc.
         'color_active' => '#95c837',
@@ -82,7 +80,7 @@ function iamaze_customizer_config() {
         'stylesheet_id' => 'customize-styles', 
 		
         // Only use this if you are bundling the plugin with your theme (see above)
-        'url_path'     => get_template_directory_uri() . '/inc/kirki/',
+        //'url_path'     => get_template_directory_uri() . '/inc/kirki/',
 
         'textdomain'   => 'i-amaze',
 		
@@ -90,6 +88,11 @@ function iamaze_customizer_config() {
 		
 		
 	);
+	
+	if ( !class_exists( 'Kirki' ) ) {
+		$args['url_path'] = get_template_directory_uri() . '/inc/kirki/';
+	}
+
 	
 	
 	return $args;
@@ -111,7 +114,13 @@ function iamaze_add_panels_and_sections( $wp_customize ) {
 		'priority'    => 140,
 		'title'       => __( 'Slider', 'i-amaze' ),
 		'description' => __( 'Slides details', 'i-amaze' ),
-	) );	
+	));
+	
+	$wp_customize->add_panel( 'rmenu', array(
+		'priority'    => 130,
+		'title'       => __( 'Responsive Menu', 'i-amaze' ),
+		'description' => __( 'Responsive Menu Options', 'i-amaze' ),
+	) );		
 
     /**
      * Add Sections
@@ -122,6 +131,13 @@ function iamaze_add_panels_and_sections( $wp_customize ) {
         'priority' => 130,
     ));
 	
+	$wp_customize->add_section('slides', array(
+        'title'    => __('Slides', 'i-amaze'),
+        'description' => '',
+        'panel' => 'slider',		
+        'priority' => 140,
+    ));		
+	
     $wp_customize->add_section('layout', array(
         'title'    => __('Layout Options', 'i-amaze'),
         'description' => '',
@@ -130,14 +146,14 @@ function iamaze_add_panels_and_sections( $wp_customize ) {
 	
     $wp_customize->add_section('social', array(
         'title'    => __('Social Links', 'i-amaze'),
-        'description' => __('Insert full URL of your social link including &#34;http://&#34; replacing #', 'i-amaze'),
+        'description' => __('Insert full URL of your social link including &#34;http://&#34; replacing #, Empty the fileld if not using the link.', 'i-amaze'),
         'priority' => 130,
     ));		
 	
     $wp_customize->add_section('blogpage', array(
         'title'    => __('Default Blog Page', 'i-amaze'),
         'description' => '',
-        'priority' => 150,
+        'priority' => 130,
     ));	
 	
 	// slider sections
@@ -146,44 +162,6 @@ function iamaze_add_panels_and_sections( $wp_customize ) {
         'title'    => __('Slide Settings', 'i-amaze'),
         'description' => '',
         'panel' => 'slider',		
-        'priority' => 140,
-    ));	
-	
-	$wp_customize->add_section('slides', array(
-        'title'    => __('Slides', 'i-amaze'),
-        'description' => '',
-        'panel' => 'slider',		
-        'priority' => 140,
-    ));		
-	
-	$wp_customize->add_section('slide1', array(
-        'title'    => __('Slide 1', 'i-amaze'),
-        'description' => '',
-        'panel' => 'slider',		
-        'priority' => 140,
-    ));	
-	$wp_customize->add_section('slide2', array(
-        'title'    => __('Slide 2', 'i-amaze'),
-        'description' => '',
-        'panel' => 'slider',		
-        'priority' => 140,
-    ));	
-	$wp_customize->add_section('slide3', array(
-        'title'    => __('Slide 3', 'i-amaze'),
-        'description' => '',
-        'panel' => 'slider',		
-        'priority' => 140,
-    ));	
-	$wp_customize->add_section('slide4', array(
-        'title'    => __('Slide 4', 'i-amaze'),
-        'description' => '',
-        'panel' => 'slider',		
-        'priority' => 140,
-    ));	
-	
-    $wp_customize->add_section('typography', array(
-        'title'    => __('Typography', 'i-amaze'),
-        'description' => '',
         'priority' => 140,
     ));		
 	
@@ -195,13 +173,21 @@ function iamaze_add_panels_and_sections( $wp_customize ) {
         'priority' => 170,
     ));	
 	
-	/*
-    $wp_customize->add_section('kirkiex', array(
-        'title'    => __('Kirki Example', 'i-amaze'),
+	// Responsive Menu sections
+	
+	$wp_customize->add_section('rmgeneral', array(
+        'title'    => __('General Options', 'i-amaze'),
+        'panel' => 'rmenu',		
+        'description' => '',
+        'priority' => 170,
+    ));	
+	
+    $wp_customize->add_section('rmsettings', array(
+        'title'    => __('Menu Appearance', 'i-amaze'),
+        'panel' => 'rmenu',
         'description' => '',
         'priority' => 180,
-    ));
-	*/					
+    ));						
 	
 }
 
@@ -210,59 +196,57 @@ function iamaze_custom_setting( $controls ) {
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'top_phone',
+        'settings'  => 'top_phone',
         'label'    => __( 'Phone Number', 'i-amaze' ),
         'section'  => 'basic',
-        'default'  => '',
+        'default'  => '1-000-123-4567',
         'priority' => 1,
 		'description' => __( 'Phone number that appears on top bar.', 'i-amaze' ),
     );
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'top_email',
+        'settings'  => 'top_email',
         'label'    => __( 'Email Address', 'i-amaze' ),
         'section'  => 'basic',
-        'default'  => '',
+        'default'  => 'email@example.com',
         'priority' => 1,
 		'description' => __( 'Email Id that appears on top bar.', 'i-amaze' ),		
     );
-	/*
+
 	$controls[] = array(
 		'type'        => 'upload',
-		'setting'     => 'logo',
-		'label'       => __( 'Site header logo', 'i-amaze' ),
-		'description' => __( 'Width 280px, height 72px max. Upload logo for header', 'i-amaze' ),
-        'section'  => 'basic',
-		'default'     => get_template_directory_uri() . '/images/logo.png',
-		'priority'    => 1,
+		'settings'     => 'logo-trans',
+		'label'       => __( 'Reverse Transparent logo', 'i-amaze' ),
+		'description' => __( 'Transparent logo for the fullscreen slider and dark background. Width 280px, height 72px max.', 'i-amaze' ),
+        'section'  => 'title_tagline',
+		'default'     => '',		
+		'priority'    => 3,
 	);
-	*/
 	
 	$controls[] = array(
-		'type'        => 'upload',
-		'setting'     => 'logo-trans',
-		'label'       => __( 'Transparent logo', 'i-amaze' ),
-		'description' => __( 'Transparent logo for the fullscreen slider. Width 280px, height 72px max.', 'i-amaze' ),
-        'section'  => 'basic',
-		//'default'     => get_template_directory_uri() . '/images/logo-trans.png',
-		'default'     => '',		
-		'priority'    => 1,
-	);		
+		'type'        => 'switch',
+		'settings'     => 'show_search',
+		'label'       => __( 'Show Search', 'i-amaze' ),
+		'description' => __( 'Show search option on main navigation', 'i-amaze' ),
+		'section'     => 'basic',
+		'default'     => 1,
+		'priority'    => 3,
+	);				
 	
 	$controls[] = array(
 		'type'        => 'color',
-		'setting'     => 'primary_color',
+		'settings'     => 'primary_color',
 		'label'       => __( 'Primary Color', 'i-amaze' ),
 		'description' => __( 'Choose your theme color', 'i-amaze' ),
-		'section'     => 'layout',
+		'section'     => 'colors',
 		'default'     => '#e57e26',
 		'priority'    => 1,
 	);	
 	
 	$controls[] = array(
 		'type'        => 'radio-image',
-		'setting'     => 'blog_layout',
+		'settings'     => 'blog_layout',
 		'label'       => __( 'Blog Posts Layout', 'i-amaze' ),
 		'description' => __( '(Choose blog posts layout (one column/two column)', 'i-amaze' ),
 		'section'     => 'layout',
@@ -276,7 +260,7 @@ function iamaze_custom_setting( $controls ) {
 	
 	$controls[] = array(
 		'type'        => 'switch',
-		'setting'     => 'show_full',
+		'settings'     => 'show_full',
 		'label'       => __( 'Show Full Content', 'i-amaze' ),
 		'description' => __( 'Show full content on blog pages', 'i-amaze' ),
 		'section'     => 'layout',
@@ -286,7 +270,7 @@ function iamaze_custom_setting( $controls ) {
 	
 	$controls[] = array(
 		'type'        => 'switch',
-		'setting'     => 'wide_layout',
+		'settings'     => 'wide_layout',
 		'label'       => __( 'Wide layout', 'i-amaze' ),
 		'description' => __( 'Check to have wide layout', 'i-amaze' ),
 		'section'     => 'layout',
@@ -298,82 +282,82 @@ function iamaze_custom_setting( $controls ) {
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_facebook',
+        'settings'  => 'itrans_social_facebook',
         'label'    => __( 'Facebook', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_twitter',
+        'settings'  => 'itrans_social_twitter',
         'label'    => __( 'Twitter', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_flickr',
+        'settings'  => 'itrans_social_flickr',
         'label'    => __( 'Flickr', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_feed',
+        'settings'  => 'itrans_social_feed',
         'label'    => __( 'RSS', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_instagram',
+        'settings'  => 'itrans_social_instagram',
         'label'    => __( 'Instagram', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_googleplus',
+        'settings'  => 'itrans_social_googleplus',
         'label'    => __( 'Google Plus', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_youtube',
+        'settings'  => 'itrans_social_youtube',
         'label'    => __( 'YouTube', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_pinterest',
+        'settings'  => 'itrans_social_pinterest',
         'label'    => __( 'Pinterest', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'itrans_social_linkedin',
+        'settings'  => 'itrans_social_linkedin',
         'label'    => __( 'Linkedin', 'i-amaze' ),
         'section'  => 'social',
-        'default'  => '',
+        'default'  => '#',
         'priority' => 1,
     );	
 	
@@ -381,7 +365,7 @@ function iamaze_custom_setting( $controls ) {
 
 	$controls[] = array(
 		'type'        => 'slider',
-		'setting'     => 'itrans_sliderspeed',
+		'settings'     => 'itrans_sliderspeed',
 		'label'       => __( 'Slide Duration', 'i-amaze' ),
 		'description' => __( 'Slide visibility in second', 'i-amaze' ),
 		'section'     => 'slidersettings',
@@ -397,7 +381,7 @@ function iamaze_custom_setting( $controls ) {
 	// Parallax Effect
 	$controls[] = array(
 		'type'        => 'switch',
-		'setting'     => 'itrans_sliderparallax',
+		'settings'     => 'itrans_sliderparallax',
 		'label'       => __( 'Parallax Effect', 'i-amaze' ),
 		'description' => __( 'Turn ON/OFF Parallax Effect', 'i-amaze' ),
 		'section'     => 'slidersettings',
@@ -407,13 +391,36 @@ function iamaze_custom_setting( $controls ) {
 	
 	$controls[] = array(
 		'type'        => 'switch',
-		'setting'     => 'slider_overlay',
+		'settings'     => 'slider_overlay',
 		'label'       => __( 'Turn Off Slider Overlay Layer', 'i-amaze' ),
 		'description' => __( 'Turn Off/on the dotted slider overlay layer', 'i-amaze' ),
 		'section'     => 'slidersettings',
 		'default'     => 1,
 		'priority'    => 4,
-	);			
+	);	
+	
+	$controls[] = array(
+		'type'        => 'switch',
+		'settings'     => 'slider_ubar',
+		'label'       => __( 'Turn On/Off Top Utilitybar', 'i-amaze' ),
+		'description' => __( 'Turn Off/on the top utilitybar containing email/phone and socoal icon links', 'i-amaze' ),
+		'section'     => 'slidersettings',
+		'default'     => 0,
+		'priority'    => 5,
+	);	
+	
+	$controls[] = array(
+		'type'        => 'slider',
+		'settings'    => 'slider_height',
+		'label'       => __( 'Slider Height (in %)', 'i-amaze' ),
+		'section'     => 'slidersettings',
+		'default'     => 100,
+		'choices'     => array(
+			'min'  => '0',
+			'max'  => '100',
+			'step' => '1',
+		),
+	);				
 	
 	// slides 	
 	$controls[] = array(
@@ -487,23 +494,24 @@ function iamaze_custom_setting( $controls ) {
 			),		
 				
 		)
-	);	
-		
+	);		
+
+	
 	// Blog page setting
 	
 	$controls[] = array(
 		'type'        => 'switch',
-		'setting'     => 'slider_stat',
-		'label'       => __( 'Hide i-amaze Slider', 'i-amaze' ),
+		'settings'     => 'slider_stat',
+		'label'       => __( 'Turn ON/OFF i-amaze Slider', 'i-amaze' ),
 		'description' => __( 'Turn Off or On to hide/show default i-amaze slider', 'i-amaze' ),
 		'section'     => 'blogpage',
-		'default'     => 1,
-		'priority'    => 1,
+		'default'     => 0,
+		'priority'    => 0,
 	);	
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'blogslide_scode',
+        'settings'  => 'blogslide_scode',
         'label'    => __( 'Other Slider Shortcode', 'i-amaze' ),
         'section'  => 'blogpage',
         'default'  => '',
@@ -513,224 +521,223 @@ function iamaze_custom_setting( $controls ) {
 	
     $controls[] = array(
         'type'     => 'text',
-        'setting'  => 'banner_text',
+        'settings'  => 'banner_text',
         'label'    => __( 'Banner Text', 'i-amaze' ),
         'section'  => 'blogpage',
-        'default'  => '',
-        'priority' => 4,
+        'default'  => get_bloginfo( 'description' ),
+        'priority' => 3,
 		'description' => __( 'if you are using a logo and want your site title or slogan to appear on the header banner', 'i-amaze' ),		
-    );		
-	
-	$controls[] = array(
-        'type'        => 'background',
-        'settings'    => 'home_header_background',
-        'label'       => __( 'Blog page header background', 'i-amaze' ),
-        'section'     => 'blogpage',
-        'default'     => array(
-            'image'    => get_template_directory_uri() . '/images/bg/bg7.jpg',
-            'repeat'   => 'no-repeat',
-            'size'     => 'cover',
-            'attach'   => 'fixed',
-            'position' => 'center-center',
-        ),
-        'priority'    => 5,
-        'output'      => '.home.nx-transheader .site .iheader',
     );
-
-	/*
-	// h1 title tags
-	$controls[] = array(
-			'type'        => 'select',
-			'setting'     => 'head_font_family_1',
-			'label'       => __( 'H1 Font-Family', 'i-amaze' ),
-			'description' => __( 'Please choose a font for your site. This font-family will be applied to all elements on your page, including headers and body.', 'i-amaze' ),
-			'section'     => 'typography',
-			'default'     => 'Roboto',
-			'priority'    => 20,
-			'choices'     => Kirki_Fonts::get_font_choices(),
-			'output'      => array(
-				array(
-					'element'  => 'h1, h2, h3, h4, h5, h6, .entry-header h1.entry-title, h2.comments-title, .comment-reply-title, .widget .widget-title',
-					'property' => 'font-family',
-				),
-			),
-			'transport'   => 'postMessage',
-			'js_vars'     => array(
-				array(
-					'element'  => 'h1, h2, h3, h4, h5, h6, .entry-header h1.entry-title, h2.comments-title, .comment-reply-title, .widget .widget-title',
-					'function' => 'css',
-					'property' => 'font-family',
-				),
-			),
-	);
 	
-	// body font
-	$controls[] = array(
-			'type'        => 'select',
-			'setting'     => 'body_font_family',
-			'label'       => __( 'Body Font-Family', 'i-amaze' ),
-			'description' => __( 'Please choose a font for your site. This font-family will be applied to all elements on your page, including headers and body.', 'i-amaze' ),
-			'section'     => 'typography',
-			'default'     => 'Roboto',
-			'priority'    => 10,
-			'choices'     => Kirki_Fonts::get_font_choices(),
-			'output'      => array(
-				array(
-					'element'  => 'body',
-					'property' => 'font-family',
-				),
-			),
-			'transport'   => 'postMessage',
-			'js_vars'     => array(
-				array(
-					'element'  => 'body',
-					'function' => 'css',
-					'property' => 'font-family',
-				),
-			),
-	);	
 	$controls[] = array(
 		'type'        => 'slider',
-		'setting'     => 'body_font_size',
-		'label'       => __( 'Body Font-Size', 'i-amaze' ),
-		'description' => __( 'Please choose a font-size for your body.', 'i-amaze' ),
-		'section'     => 'typography',
-		'default'     => 13,
-		'priority'    => 10,
+		'settings'    => 'blog_header_height',
+		'label'       => __( 'Image/Vedio Header Height (in %)', 'i-amaze' ),
+		'section'     => 'blogpage',
+		'default'     => 100,
 		'choices'     => array(
-			'min'  => 11,
-			'max'  => 24,
-			'step' => 1
+			'min'  => '0',
+			'max'  => '100',
+			'step' => '1',
 		),
-		'output'        => array(
-			array(
-				'element'  => 'body',
-				'property' => 'font-size',
-				'units'    => 'px',
-			),
-		),
-		'transport'   => 'postMessage',
-		'js_vars'     => array(
-			array(
-				'element'  => 'body',
-				'function' => 'css',
-				'property' => 'font-size',
-			),
-		),
-	);	
-	*/
+	);		
+	
 
+	//rmgeneral
+	//rmsettings
+
+	$controls[] = array(
+		'label' => __('Enable Mobile Navigation', 'i-amaze'),
+		'description' => __('Check if you want to activate mobile navigation.', 'i-amaze'),
+		'settings' => 'enabled',
+		'default' => '1',
+		'type' => 'checkbox',
+        'section'  => 'rmgeneral',	
+	);
+
+	$controls[] = array(
+		'label' => __('Elements to hide in mobile:', 'i-amaze'),
+		'description' => __('Enter the css class/ids for different elements you want to hide on mobile separeted by a comma(,). Example: .nav,#main-menu ', 'i-amaze'),
+		'settings' => 'hide',
+		'default' => '',
+		'type' => 'text',
+        'section'  => 'rmgeneral',		
+	);
+	
+	$controls[] = array(
+		'label' => __('Enable Swipe', 'i-amaze'),
+		'description' => __('Enable swipe gesture to open/close menus, Only applicable for left/right menu.', 'i-amaze'),
+		'settings' => 'swipe',
+		'default' => 'yes',
+		'choices' => array('yes' => __('Yes', 'i-amaze'),'no' => __('No', 'i-amaze')),
+		'type' => 'radio',
+        'section'  => 'rmgeneral',		
+	);
+	
+	$controls[] = array(
+		'label' => __('Search Field Position', 'i-amaze'),
+		'description' => __('Select the position of search box or simply hide the search box if you donot need it.', 'i-amaze'),
+		'settings' => 'search_box',
+		'default' => 'below_menu',
+		'choices' => array('above_menu' => __('Above Menu', 'i-amaze'), 'below_menu' => __('Below Menu', 'i-amaze'), 'hide'=> __('Hide search box', 'i-amaze') ),
+		'type' => 'select',
+        'section'  => 'rmgeneral',		
+	);
+		
+	$controls[] = array(
+		'label' => __('Allow zoom on mobile devices', 'i-amaze'),
+		'settings' => 'zooming',
+		'default' => 'yes',
+		'choices' => array('yes' => __('Yes', 'i-amaze'),'no' => __('No', 'i-amaze')),
+		'type' => 'radio',
+        'section'  => 'rmgeneral',	
+	);
+		
+
+	// Responsive Menu Settings
+	$controls[] = array(
+		'label' => __('Menu Symbol Position', 'i-amaze'),
+		'description' => __('Select menu icon position which will be displayed on the menu bar.', 'i-amaze'),
+		'settings' => 'menu_symbol_pos',
+		'default' => 'left',
+		'choices' => array('left' => __('Left', 'i-amaze'),'right' => __('Right', 'i-amaze')),
+		'type' => 'select',
+        'section'  => 'rmsettings',	
+	);
+
+	$controls[] = array(
+		'label' => __('Menu Text', 'i-amaze'),
+		'description' => __('Entet the text you would like to display on the menu bar.', 'i-amaze'),
+		'settings' => 'bar_title',
+		'default' => __('MENU', 'i-amaze'),
+		'type' => 'text',
+        'section'  => 'rmsettings',			
+	);
+
+	$controls[] = array(
+		'label' => __('Menu Open Direction', 'i-amaze'),
+		'description' => __('Select the direction from where menu will open.', 'i-amaze'),
+		'settings' => 'position',
+		'default' => 'left',
+		'choices' => array('left' => 'Left','right' => 'Right', 'top' => 'Top' ),
+		'type' => 'select',
+        'section'  => 'rmsettings',			
+	);
+
+	$controls[] = array(
+		'label' => __('Display menu from width (in px)', 'i-amaze'),
+		'description' => __(' Enter the width (in px) below which the responsive menu will be visible on screen', 'i-amaze'),
+		'settings' => 'from_width',
+		'default' => 1069,
+		'type' => 'text',
+        'section'  => 'rmsettings',			
+	);
+
+	$controls[] = array(
+		'label' => __('Menu Width', 'i-amaze'),
+		'description' => __('Enter menu width in (%) only applicable for left and right menu.', 'i-amaze'),
+		'settings' => 'how_wide',
+		'default' => '80',
+		'type' => 'text',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu bar background color', 'i-amaze'),
+		'description' => '',
+		'settings' => 'bar_bgd',
+		'default' => '#e57e26',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu bar text color', 'i-amaze'),
+		'settings' => 'bar_color',
+		'default' => '#F2F2F2',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu background color', 'i-amaze'),
+		'settings' => 'menu_bgd',
+		'default' => '#2E2E2E',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu text color', 'i-amaze'),
+		'settings' => 'menu_color',
+		'default' => '#CFCFCF',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu mouse over text color', 'i-amaze'),
+		'settings' => 'menu_color_hover',
+		'default' => '#606060',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu icon color', 'i-amaze'),
+		'settings' => 'menu_icon_color',
+		'default' => '#FFFFFF',
+		'type' => 'color',
+        'section'  => 'rmsettings',			
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu borders(top & left) color', 'i-amaze'),
+		'settings' => 'menu_border_top',
+		'default' => '#0D0D0D',
+		'type' => 'color',
+        'section'  => 'rmsettings',		
+	);
+	
+	$controls[] = array(
+		'label' => __('Menu borders(bottom) color', 'i-amaze'),
+		'settings' => 'menu_border_bottom',
+		'default' => '#131212',
+		'type' => 'color',
+        'section'  => 'rmsettings',		
+	);
+	
+	$controls[] = array(
+		'label' => __('Enable borders for menu items', 'i-amaze'),
+		'settings' => 'menu_border_bottom_show',
+		'default' => 'yes',
+		'choices' =>  array('yes' => __('Yes', 'i-amaze'),'no' => __('No', 'i-amaze')),
+		'type' => 'radio',
+        'section'  => 'rmsettings',			
+	);	
+	
 	$controls[] = array(
 		'type'        => 'custom',
 		'settings'    => 'custom_demo',
-		'label' => __( 'TemplatesNext Promo', 'i-amaze' ),
 		'section'     => 'nxpromo',
 		'default'	  => '<div class="promo-box">
         <div class="promo-2">
         	<div class="promo-wrap">
-                <!-- <a href="http://templatesnext.org/ispirit/landing/" target="_blank">Go Premium</a> -->  			
-            	<a href="http://templatesnext.in/i-amaze/" target="_blank">i-amaze Demo</a>
-                <a href="https://www.facebook.com/templatesnext" target="_blank">Facebook</a> 
-                <a href="http://templatesnext.org/ispirit/landing/forums/" target="_blank">Support</a>                                 
-                <!-- <a href="http://templatesnext.in/i-amaze/docs">Documentation</a> -->
-                <a href="https://wordpress.org/support/view/theme-reviews/i-amaze#postform" target="_blank">Rate i-amaze</a>                
-                <div class="donate">                
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="M2HN47K2MQHAN">
-                    <table>
-                    <tr><td><input type="hidden" name="on0" value="If you like my work, you can buy me">If you like my work, you can buy me</td></tr><tr><td><select name="os0">
-                        <option value="a cup of coffee">1 cup of coffee $10.00 USD</option>
-                        <option value="2 cup of coffee">2 cup of coffee $20.00 USD</option>
-                        <option value="3 cup of coffee">3 cup of coffee $30.00 USD</option>
-                    </select></td></tr>
-                    </table>
-                    <input type="hidden" name="currency_code" value="USD">
-                    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-                    <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-                    </form>
-                </div>                                                                          
+            	<a href="http://templatesnext.in/i-amaze-landing/" target="_blank">' . __('i-amaze Demo', 'i-amaze') . '</a>
+                <a href="https://www.facebook.com/templatesnext" target="_blank">' . __('Facebook', 'i-amaze') . '</a> 
+                <a href="http://templatesnext.org/ispirit/landing/forums/" target="_blank">' . __('Support', 'i-amaze') . '</a>                                 
+                <a href="https://wordpress.org/support/view/theme-reviews/i-amaze#postform" target="_blank">' . __('Rate i-amaze', 'i-amaze') . '</a>                
             </div>
         </div>
 		</div>',
 		'priority' => 10,
 	);
 	
-	/*	
-	$controls[] = array(
-		'type'        => 'sortable',
-		'settings'    => 'my_setting',
-		'label'       => __( 'This is the label', 'i-amaze' ),
-		'section'     => 'kirkiex',
-		'default'     => array(
-			'option3',
-			'option1',
-			'option4'
-		),
-		'choices'     => array(
-			'option1' => esc_attr__( 'Option 1', 'i-amaze' ),
-			'option2' => esc_attr__( 'Option 2', 'i-amaze' ),
-			'option3' => esc_attr__( 'Option 3', 'i-amaze' ),
-			'option4' => esc_attr__( 'Option 4', 'i-amaze' ),
-			'option5' => esc_attr__( 'Option 5', 'i-amaze' ),
-			'option6' => esc_attr__( 'Option 6', 'i-amaze' ),
-		),
-		'priority'    => 10,
-	);	
-	
-	$controls[] = array(
-		'type'        => 'code',
-		'settings'    => 'code_demo',
-		'label'       => __( 'Code Control', 'i-amaze' ),
-		'section'     => 'kirkiex',
-		'default'     => 'body { background: #fff; }',
-		'priority'    => 10,
-		'choices'     => array(
-			'language' => 'css',
-			'theme'    => 'monokai',
-			'height'   => 250,
-		),
-	);
-	
-	$controls[] = array(
-		'type'        => 'repeater',
-		'label'       => esc_attr__( 'Repeater Control', 'i-amaze' ),
-		'section'     => 'kirkiex',
-		'priority'    => 10,
-		'settings'    => 'my_setting',
-		'default'     => array(
-			array(
-				'link_text' => esc_attr__( 'Kirki Site', 'i-amaze' ),
-				'link_url'  => 'https://kirki.org',
-			),
-			array(
-				'link_text' => esc_attr__( 'Kirki Repository', 'i-amaze' ),
-				'link_url'  => 'https://github.com/aristath/kirki',
-			),
-		),
-		'fields' => array(
-			'link_text' => array(
-				'type'        => 'text',
-				'label'       => esc_attr__( 'Link Text', 'i-amaze' ),
-				'description' => esc_attr__( 'This will be the label for your link', 'i-amaze' ),
-				'default'     => '',
-			),
-			'link_url' => array(
-				'type'        => 'text',
-				'label'       => esc_attr__( 'Link URL', 'i-amaze' ),
-				'description' => esc_attr__( 'This will be the link URL', 'i-amaze' ),
-				'default'     => '',
-			),
-		)
-	);
-	*/
-	
     return $controls;
 }
 add_filter( 'kirki/controls', 'iamaze_custom_setting' );
 
 
-	
 
 
 

@@ -15,10 +15,8 @@ get_header(); ?>
 	<?php 
 		global $post;
 		
-		$sub_title = $folio_url = "";
-		
 		if ( function_exists( 'rwmb_meta' ) ) {
-			$sub_title = esc_attr(rwmb_meta('iamaze_portfolio_subtitle'));
+			$sub_title = esc_html(rwmb_meta('iamaze_portfolio_subtitle'));
 			$folio_url = esc_url(rwmb_meta('iamaze_portfolio_url'));
 		}
 	?>
@@ -36,7 +34,7 @@ get_header(); ?>
 						<div class="entry-thumbnail tx-slider" data-delay="8000">
 						<?php                        
 							$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-							echo '<a href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="" class="tx-colorbox">';
+							echo '<a href="' . esc_url($large_image_url[0]) . '" title="' . esc_attr(the_title_attribute( 'echo=0' )) . '" class="tx-colorbox">';
 							the_post_thumbnail('iamaze-single-thumb');
 							echo '</a>';
 							
@@ -45,7 +43,7 @@ get_header(); ?>
 								$large_image_url1 = wp_get_attachment_image_src( MultiPostThumbnails::get_post_thumbnail_id( get_post_type(), 'feature-image-2', $post->ID ), 'large' );
 								if ($large_image_url1)
 								{
-									echo '<a href="' . $large_image_url1[0] . '" title="' . the_title_attribute('echo=0') . '" class="tx-colorbox">';
+									echo '<a href="' . esc_url($large_image_url1[0]) . '" title="' . the_title_attribute('echo=0') . '" class="tx-colorbox">';
 									MultiPostThumbnails::the_post_thumbnail( get_post_type(), 'feature-image-2', NULL, 'iamaze-single-thumb' );
 									echo '</a>';
 								}
@@ -53,7 +51,7 @@ get_header(); ?>
 								$large_image_url2 = wp_get_attachment_image_src( MultiPostThumbnails::get_post_thumbnail_id( get_post_type(), 'feature-image-3', $post->ID ), 'large' );
 								if ($large_image_url2)
 								{
-									echo '<a href="' . $large_image_url2[0] . '" title="' . the_title_attribute('echo=0') . '" class="tx-colorbox">';
+									echo '<a href="' . esc_url($large_image_url2[0]) . '" title="' . the_title_attribute('echo=0') . '" class="tx-colorbox">';
 									MultiPostThumbnails::the_post_thumbnail( get_post_type(), 'feature-image-3', NULL, 'iamaze-single-thumb' );
 									echo '</a>';
 								}
@@ -84,7 +82,7 @@ get_header(); ?>
                     <?php if (tx_folio_term( 'portfolio-category' )) : ?>
                     	<div class="folio-cat">
                         	<span class="genericon genericon-category"></span>
-							<span class="folio-categories"><?php echo tx_folio_term( 'portfolio-category' ); ?></span>
+							<span class="folio-categories"><?php echo esc_attr(tx_folio_term( 'portfolio-category' )); ?></span>
                         </div>
                     <?php endif; ?>
                     <?php endif; ?>
@@ -93,11 +91,11 @@ get_header(); ?>
                     
 					<div class="entry-content">
 						<?php the_content(); ?>
-						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'i-amaze' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . esc_attr__( 'Pages:', 'i-amaze' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
 					</div><!-- .entry-content -->
 
 					<footer class="entry-meta">
-						<?php edit_post_link( __( 'Edit', 'i-amaze' ), '<span class="edit-link">', '</span>' ); ?>
+						<?php edit_post_link( esc_attr__( 'Edit', 'i-amaze' ), '<span class="edit-link">', '</span>' ); ?>
 					</footer><!-- .entry-meta -->
 				</article><!-- #post -->
 

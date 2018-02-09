@@ -68,7 +68,6 @@ function iamaze_setup() {
 	 * specifically font, colors, icons, and column width.
 	 */
 	add_editor_style( array( 'css/editor-style.css', 'fonts/genericons.css', iamaze_fonts_url() ) );
-	//add_editor_style( array( 'css/admin-style.css', array(), '2016-05-22' ) );	
 
 	// Adds RSS feed links to <head> for posts and comments.
 	add_theme_support( 'automatic-feed-links' );
@@ -80,7 +79,7 @@ function iamaze_setup() {
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
 
 	// This theme uses wp_nav_menu() in one location.
-	register_nav_menu( 'primary', __( 'Navigation Menu', 'i-amaze' ) );
+	register_nav_menu( 'primary', esc_attr__( 'Navigation Menu', 'i-amaze' ) );
 	
 	// add title tag support since WordPress 4.1 
 	add_theme_support( 'title-tag' );		
@@ -101,6 +100,10 @@ function iamaze_setup() {
 	
 	// Add Support for woocommerce
 	add_theme_support( 'woocommerce' );	
+    add_theme_support( 'wc-product-gallery-zoom' );
+    add_theme_support( 'wc-product-gallery-lightbox' );
+    add_theme_support( 'wc-product-gallery-slider' );
+		
 	
 	$iamaze_defaults_bg = array(
 		'default-color'          => '#f3f1ed',
@@ -113,7 +116,6 @@ function iamaze_setup() {
 	// This theme uses its own gallery styles.
 	add_filter( 'use_default_gallery_style', '__return_false' );
 	
-	
 	// Add theme logo //
 	add_theme_support( 'custom-logo', array(
 		'height'      => 64,
@@ -125,6 +127,15 @@ function iamaze_setup() {
 	
 	add_theme_support( 'customize-selective-refresh-widgets' );	
 	
+	$iamaze_defaults_header = array(
+        'default-image'      => get_template_directory_uri() . '/images/bg/bg7.jpg',
+        'flex-width'         => true,
+        'flex-height'        => true,
+		'video'				 => true,
+    );
+    add_theme_support( 'custom-header', $iamaze_defaults_header );	
+	
+		
 }
 add_action( 'after_setup_theme', 'iamaze_setup' );
 
@@ -192,14 +203,8 @@ function iamaze_scripts_styles() {
 	// load masonry for footer and post layout
 	wp_enqueue_script( 'jquery-masonry' );	
 
-	// Loads JavaScript file with functionality specific to i-amaze.
-	//wp_enqueue_script( 'modernizer-custom', get_template_directory_uri() . '/js/modernizr.custom.js', array( 'jquery' ), '2014-01-13', true );
-	
 	// Loads JavaScript file for scroll related functions and animations.
 	wp_enqueue_script( 'iamaze-waypoint', get_template_directory_uri() . '/js/waypoints.min.js', array( 'jquery' ), '2014-01-13', true );
-	
-	// Loads JavaScript file for small screen side menu.
-	wp_enqueue_script( 'iamaze-sidr', get_template_directory_uri() . '/js/jquery.sidr.min.js', array( 'jquery' ), '2014-01-13', true );
 	
 	// Loads JavaScript file for jquery carousel
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl.carousel.min.js', array( 'jquery' ), '2014-01-13', true );
@@ -207,11 +212,8 @@ function iamaze_scripts_styles() {
 	// Loads JavaScript file for inview
 	wp_enqueue_script( 'inview', get_template_directory_uri() . '/js/jquery.inview.min.js', array( 'jquery' ), '1.1.2', true );		
 	
-	// Loads JavaScript file for pace preloader
-	//wp_enqueue_script( 'pace', get_template_directory_uri() . '/js/pace.min.js', array( 'jquery' ), '1.1.2', true );				
-	
 	// Loads JavaScript file with functionality specific to i-amaze.
-	wp_enqueue_script( 'iamaze-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '2013-07-18', true );
+	wp_enqueue_script( 'iamaze-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '1.0.7', true );
 	
 	
 	$blog_layout = get_theme_mod('blog_layout', '2');
@@ -225,9 +227,6 @@ function iamaze_scripts_styles() {
 	// Add Animate stle, used used for css animations.
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '2014-01-12' );
 	
-	// Add Animate stle, used used for side menu.
-	wp_enqueue_style( 'iamaze-sidr', get_template_directory_uri() . '/css/jquery.sidr.dark.css', array(), '2014-01-12' );	
-	
 	// Add owl-carusel style
 	wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl.carousel.css', array(), '2014-01-12' );
 	
@@ -235,51 +234,18 @@ function iamaze_scripts_styles() {
 	wp_enqueue_style( 'owl-carousel-theme', get_template_directory_uri() . '/css/owl.theme.css', array(), '2014-01-12' );	
 	
 	// Add owl-carusel transition
-	wp_enqueue_style( 'owl-carousel-transitions', get_template_directory_uri() . '/css/owl.transitions.css', array(), '2014-01-12' );				
+	wp_enqueue_style( 'owl-carousel-transitions', get_template_directory_uri() . '/css/owl.transitions.css', array(), '2016-01-12' );				
 	
 	// Loads our main stylesheet.
-	wp_enqueue_style( 'iamaze-style', get_stylesheet_uri(), array(), '2013-07-18' );
+	wp_enqueue_style( 'iamaze-style', get_stylesheet_uri(), array(), '1.0.7' );
 	
 	// blog posts layout style
 	if ( $blog_layout == '2' ) {
-		wp_enqueue_style( 'i-amaze-blog-layout', get_template_directory_uri() . '/css/twocol-blog.css', array(), '2014-03-11' );	
+		wp_enqueue_style( 'iamaze-blog-layout', get_template_directory_uri() . '/css/twocol-blog.css', array(), '2016-03-11' );	
 	}
 
-	// Loads the Internet Explorer specific stylesheet.
-	wp_enqueue_style( 'iamaze-ie', get_template_directory_uri() . '/css/ie.css', array( 'iamaze-style' ), '2013-07-18' );
-	wp_style_add_data( 'iamaze-ie', 'conditional', 'lt IE 9' );
-	
-	
-	wp_enqueue_style( 'i-amaze-extra-stylesheet', get_template_directory_uri() . '/css/extra-style.css', array(), '2014-03-11' );
-	$custom_css = wp_filter_nohtml_kses(get_theme_mod('extra_style', ''), '');
-	
-	if ( $custom_css ) {
-		wp_add_inline_style( 'i-amaze-extra-stylesheet', $custom_css );
-	}
 }
 add_action( 'wp_enqueue_scripts', 'iamaze_scripts_styles' );
-
-/**
- * add body class for boxed layout.
- *
- * @since i-amaze 1.0
- */
-add_filter( 'body_class', 'iamaze_layout_body_class' );
-function iamaze_layout_body_class( $classes ) {
-	// add 'class-name' to the $classes array
-	
-	if ( get_theme_mod('wide_layout', '1') != 0 )
-	{
-		$classes[] = 'nx-wide';		
-	} else
-	{
-		$classes[] = 'nx-boxed';
-	}
-	
-	// return the $classes array
-	return $classes;
-}
-
 
 /**
  * Register two widget areas.
@@ -290,9 +256,9 @@ function iamaze_layout_body_class( $classes ) {
  */
 function iamaze_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Main Widget Area', 'i-amaze' ),
+		'name'          => esc_attr__( 'Main Widget Area', 'i-amaze' ),
 		'id'            => 'sidebar-1',
-		'description'   => __( 'Appears in the footer section of the site.', 'i-amaze' ),
+		'description'   => esc_attr__( 'Appears in the footer section of the site.', 'i-amaze' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
@@ -300,9 +266,9 @@ function iamaze_widgets_init() {
 	) );
 
 	register_sidebar( array(
-		'name'          => __( 'Main Sidebar Widget Area', 'i-amaze' ),
+		'name'          => esc_attr__( 'Main Sidebar Widget Area', 'i-amaze' ),
 		'id'            => 'sidebar-2',
-		'description'   => __( 'Appears on posts and pages in the sidebar.', 'i-amaze' ),
+		'description'   => esc_attr__( 'Appears on posts and pages in the sidebar.', 'i-amaze' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
@@ -332,7 +298,7 @@ function iamaze_post_nav() {
 		return;
 	?>
 	<nav class="navigation post-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'i-amaze' ); ?></h1>
+		<h1 class="screen-reader-text"><?php esc_attr_e( 'Post navigation', 'i-amaze' ); ?></h1>
 		<div class="nav-links">
 
 			<?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'i-amaze' ) ); ?>
@@ -343,22 +309,6 @@ function iamaze_post_nav() {
 	<?php
 }
 endif;
-
-
-// Add specific CSS class by filter
-
-add_filter( 'body_class', 'iamaze_twocol_blog_body_class' );
-function iamaze_twocol_blog_body_class( $classes ) {
-
-	if ( get_theme_mod('blog_layout', '2') == '2' ) {
-		$classes[] = 'twocol-blog';
-	} else
-	{
-		$classes[] = 'onecol-blog';
-	}
-	return $classes;
-}
-
 
 
 
@@ -374,19 +324,19 @@ if ( ! function_exists( 'iamaze_entry_meta' ) ) :
  */
 function iamaze_entry_meta() {
 	if ( is_sticky() && is_home() && ! is_paged() )
-		echo '<span class="featured-post">' . __( 'Sticky', 'i-amaze' ) . '</span>';
+		echo '<span class="featured-post">' . esc_attr( 'Sticky', 'i-amaze' ) . '</span>';
 
 	if ( ! has_post_format( 'link' ) && 'post' == get_post_type() )
 		iamaze_entry_date();
 
 	// Translators: used between list items, there is a space after the comma.
-	$categories_list = get_the_category_list( __( ', ', 'i-amaze' ) );
+	$categories_list = get_the_category_list( esc_attr__( ', ', 'i-amaze' ) );
 	if ( $categories_list ) {
 		echo '<span class="categories-links">' . $categories_list . '</span>';
 	}
 
 	// Translators: used between list items, there is a space after the comma.
-	$tag_list = get_the_tag_list( '', __( ', ', 'i-amaze' ) );
+	$tag_list = get_the_tag_list( '', esc_attr__( ', ', 'i-amaze' ) );
 	if ( $tag_list ) {
 		echo '<span class="tags-links">' . $tag_list . '</span>';
 	}
@@ -540,27 +490,35 @@ function iamaze_body_class( $classes ) {
 
 	if ( ! get_option( 'show_avatars' ) )
 		$classes[] = 'no-avatars';
+		
+	//class assignment based on blog layout
+	if ( get_theme_mod('blog_layout', '2') == '2' ) {
+		$classes[] = 'twocol-blog';
+	} else
+	{
+		$classes[] = 'onecol-blog';
+	}
+	
+	if ( get_theme_mod('wide_layout', '1') != 0 )
+	{
+		$classes[] = 'nx-wide';		
+	} else
+	{
+		$classes[] = 'nx-boxed';
+	}	
 
+	$hide_front_slider = get_theme_mod('slider_stat', 0);
+	if ( ( is_home() && $hide_front_slider == 0 ) || ( is_front_page() && $hide_front_slider == 0 )  ) {
+		$classes[] = 'home-slider-off';	
+	} else
+	{
+		$classes[] = 'home-slider-on';
+	}
+	
 	return $classes;
 }
 add_filter( 'body_class', 'iamaze_body_class' );
 
-/**
- * Adjust content_width value for video post formats and attachment templates.
- *
- * @since i-amaze 1.0
- *
- * @return void
- */
-function iamaze_content_width() {
-	global $content_width;
-
-	if ( is_attachment() )
-		$content_width = 724;
-	elseif ( has_post_format( 'audio' ) )
-		$content_width = 484;
-}
-add_action( 'template_redirect', 'iamaze_content_width' );
 
 /**
  * Add postMessage support for site title and description for the Customizer.
@@ -574,41 +532,42 @@ function iamaze_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-
 	
-	$wp_customize->selective_refresh->add_partial( 'blogname', array(
-		'selector' => 'a.home-link .site-title',
-		'render_callback' => 'iamaze_customize_partial_blogname',
+	
+	$wp_customize->selective_refresh->add_partial( 'basic', array(
+			'selector' => '.headerinnerwrap .home-link',
+			'settings' => array( 'custom_logo' ),
+	));
+	$wp_customize->selective_refresh->add_partial( 'hidesearch', array(
+		'selector' => '.navbar .topsearch',
+		'settings' => array( 'show_search' ),
 	) );
-	$wp_customize->selective_refresh->add_partial( 'blogdescription', array(
-		'selector' => 'a.home-link .site-description',
-		'render_callback' => 'iamaze_customize_partial_blogdescription',
+	$wp_customize->selective_refresh->add_partial( 'slidersettings', array(
+		'selector' => '.nx-slider .nx-slider-container',
+		'settings' => array( 'slidersettings' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
 	) );
-
-	$wp_customize->selective_refresh->add_partial( 'slider_stat', array(
-		'selector' => '.site .iheader',
-		'container_inclusive' => false,
-		'settings' => array( 'slider_stat' ), //
-		//'render_callback' => 'iamaze_customize_partial_normal_logo',
+	
+	$wp_customize->selective_refresh->add_partial( 'basic-1', array(
+		'selector' => '.tx-topphone',
+		'settings' => array( 'top_phone' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
 	) );
-		/**/
+	
+	$wp_customize->selective_refresh->add_partial( 'basic-2', array(
+		'selector' => '.tx-topmail',
+		'settings' => array( 'top_email' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );	
+	
+	$wp_customize->selective_refresh->add_partial( 'social-icons', array(
+		'selector' => '.socialicons',
+		'settings' => array( 'itrans_social_facebook' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );	
+	
 }
 add_action( 'customize_register', 'iamaze_customize_register' );
-
-function iamaze_customize_partial_blogname() {
-	bloginfo( 'name' );
-}
-
-function iamaze_customize_partial_blogdescription() {
-	bloginfo( 'description' );
-}
-
-function iamaze_customize_partial_normal_logo() {
-	$custom_logo_image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-	$custom_logo_image = $custom_logo_image[0];
-	echo esc_url($custom_logo_image);
-}
-
 
 /**
  * Enqueue Javascript postMessage handlers for the Customizer.
@@ -627,23 +586,19 @@ function iamaze_customize_preview_js() {
 }
 add_action( 'customize_preview_init', 'iamaze_customize_preview_js' );
 
+function iamaze_customizer_control() {
+    wp_enqueue_script('customize_control_init', get_template_directory_uri() . '/js/theme-customizer-control.js', array( 'jquery' ), '1.0.2', true ); 
+}
+add_action( 'customize_controls_enqueue_scripts', 'iamaze_customizer_control' );
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Metabox
 /*-----------------------------------------------------------------------------------*/ 
 
-include( get_template_directory() . '/inc/tnext-meta.php' );
-
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-// check for plugin using plugin name
-/*
-if ( ! is_plugin_active( 'templatesnext-toolkit/tx-toolkit.php' ) && ! is_plugin_active( 'meta-box/meta-box.php' ) ) 
-{
-	require_once( get_template_directory() . '/inc/meta-box/meta-box.php' );
+if ( function_exists( 'rwmb_meta' ) ) {
+	include( get_template_directory() . '/inc/tnext-meta.php' );
 }
-*/
-
 
 
 /*-----------------------------------------------------------------------------------*/
@@ -652,13 +607,16 @@ if ( ! is_plugin_active( 'templatesnext-toolkit/tx-toolkit.php' ) && ! is_plugin
 
 include get_template_directory() . '/inc/custom_functions.php';
 
-include get_template_directory() . '/inc/iamaze-custom-style.php';
+include get_template_directory() . '/inc/nx-custom-style.php';
 
 /*-----------------------------------------------------------------------------------*/
 /*	changing default Excerpt length 
 /*-----------------------------------------------------------------------------------*/ 
 
 function iamaze_excerpt_length($length) {
+	if ( is_admin() ) {
+		return $length;
+	}	
 	return 32;
 }
 add_filter('excerpt_length', 'iamaze_excerpt_length');
@@ -668,41 +626,55 @@ add_filter('excerpt_length', 'iamaze_excerpt_length');
 /*	changing changing default read more text 
 /*-----------------------------------------------------------------------------------*/ 
 function iamaze_excerpt_more($more) {
-       global $post;
-	return '<a class="moretag" href="'. get_permalink($post->ID) . '">'. __( 'Read More...', 'i-amaze' ). '</a>';
+	if ( is_admin() ) {
+		return $more;
+	}	
+    global $post;
+	//return '<a class="moretag" href="'. get_permalink($post->ID) . '">'. __( 'Read More...', 'i-amaze' ). '</a>';
+	return '';
 }
-add_filter('excerpt_more', 'iamaze_excerpt_more');
+add_filter('excerpt_more', 'iamaze_excerpt_more', 21);
+
+/**/
+function iamaze_excerpt_more_link( $excerpt ){
+    $post = get_post();
+    $excerpt .= '<a class="moretag noptoppad" href="'. get_permalink($post->ID) . '">' . esc_attr__( 'Read More...', 'i-amaze' ) . '</a>';
+    return $excerpt;
+}
+add_filter( 'the_excerpt', 'iamaze_excerpt_more_link', 21 );
 
 
 /*-----------------------------------------------------------------------------------*/
 /*	Adding customizer with kirki 
 /*-----------------------------------------------------------------------------------*/ 
-include get_template_directory() . '/nx-customizer.php' ;
-include get_template_directory() . '/inc/kirki/kirki.php' ;
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+include get_template_directory() . '/nx-customizer.php';
+
+if ( !class_exists( 'Kirki' ) ) {
+	include get_template_directory() . '/inc/kirki/kirki.php';
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Adding Responsive menu
+/*-----------------------------------------------------------------------------------*/
+include get_template_directory() . '/inc/responsive-menu/responsive-menu.php';
+
+/* Calling Theme Welcome on activation */
+require_once( get_template_directory() . '/inc/theme-welcome/theme-welcome.php' );
+
+
 
 /**
- * Add a stylesheet for admin panels
- * @since i-spirit 1.0
+ * Enqueue the customizer stylesheet.
  */
-add_action('admin_init', 'iamaze_admin_css');
-function iamaze_admin_css() {
-   wp_register_style( 'iamaze-admin-css', get_template_directory_uri() . '/css/admin-style.css' );
-   wp_enqueue_style( 'iamaze-admin-css' );
-}
+function iamaze_enqueue_customizer_stylesheet() {
 
-add_action( 'admin_enqueue_scripts', 'iamaze_admin_js' );
-function iamaze_admin_js() {
-    wp_enqueue_script( 'iamaze_admin_script', get_template_directory_uri() . '/js/admin-script.js' );
-}
+	wp_register_style( 'iamaze-customizer-css', get_template_directory_uri() . '/css/admin-style.css', NULL, NULL, 'all' );
+	wp_enqueue_style( 'iamaze-customizer-css' );
 
-
-/*
-Kirki Style
-function mytheme_kirki_configuration() {
-    return array( 'url_path'     => get_stylesheet_directory_uri() . '/inc/kirki/' );
 }
-add_filter( 'kirki/config', 'mytheme_kirki_configuration' );
-*/
+add_action( 'customize_controls_print_styles', 'iamaze_enqueue_customizer_stylesheet' );
 
 /*
  * Loads the Options Panel
@@ -718,7 +690,7 @@ function iamaze_remove_wc_breadcrumbs() {
 }
 
 // Adding TGM Plugin activation
-include get_template_directory() . '/inc/class-tgm-plugin-activation.php';
+require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
 
 add_action( 'tgmpa_register', 'iamaze_register_required_plugins' );
 function iamaze_register_required_plugins() {
@@ -740,13 +712,7 @@ function iamaze_register_required_plugins() {
             'name' => 'TemplatesNext OnePager', // The plugin name.
             'slug' => 'templatesnext-onepager', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
-        ),
-         // This is an example of how to include a plugin from a private repo in your theme.
-        array(
-            'name' => 'TemplatesNext ToolKit', // The plugin name.
-            'slug' => 'templatesnext-toolkit', // The plugin slug (typically the folder name).
-            'required' => false, // If false, the plugin is only 'recommended' instead of required.
-        )				
+        )		
 
     );
 
@@ -767,9 +733,9 @@ function iamaze_register_required_plugins() {
         'is_automatic' => false, // Automatically activate plugins after installation or not.
         'message' => '', // Message to output right before the plugins table.
         'strings' => array(
-            'page_title' => __( 'Install Required Plugins', 'i-amaze' ),
-            'menu_title' => __( 'Install Plugins', 'i-amaze' ),
-            'installing' => __( 'Installing Plugin: %s', 'i-amaze' ), // %s = plugin name.
+            'page_title' => esc_attr__( 'Install Required Plugins', 'i-amaze' ),
+            'menu_title' => esc_attr__( 'Install Plugins', 'i-amaze' ),
+            'installing' => esc_attr__( 'Installing Plugin: %s', 'i-amaze' ), // %s = plugin name.
             'oops' => __( 'Something went wrong with the plugin API.', 'i-amaze' ),
             'notice_can_install_required' => _n_noop( 'This theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.', 'i-amaze' ), // %1$s = plugin name(s).
             'notice_can_install_recommended' => _n_noop( 'This theme recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.', 'i-amaze' ), // %1$s = plugin name(s).
@@ -781,9 +747,9 @@ function iamaze_register_required_plugins() {
             'notice_cannot_update' => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', 'i-amaze' ), // %1$s = plugin name(s).
             'install_link' => _n_noop( 'Begin installing plugin', 'Begin installing plugins', 'i-amaze' ),
             'activate_link' => _n_noop( 'Begin activating plugin', 'Begin activating plugins', 'i-amaze' ),
-            'return' => __( 'Return to Required Plugins Installer', 'i-amaze' ),
-            'plugin_activated' => __( 'Plugin activated successfully.', 'i-amaze' ),
-            'complete' => __( 'All plugins installed and activated successfully. %s', 'i-amaze' ), // %s = dashboard link.
+            'return' => esc_attr__( 'Return to Required Plugins Installer', 'i-amaze' ),
+            'plugin_activated' => esc_attr__( 'Plugin activated successfully.', 'i-amaze' ),
+            'complete' => esc_attr__( 'All plugins installed and activated successfully. %s', 'i-amaze' ), // %s = dashboard link.
             'nag_type' => 'updated' // Determines admin notice type - can only be 'updated', 'update-nag' or 'error'.
         )
     );
@@ -791,4 +757,3 @@ function iamaze_register_required_plugins() {
     tgmpa( $plugins, $config );
 
 }
-

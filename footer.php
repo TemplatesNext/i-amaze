@@ -19,15 +19,15 @@
 			</div>
 			<div class="site-info">
                 <div class="copyright">
-                	<?php esc_attr_e( 'Copyright &copy;', 'i-amaze' ); ?>  <?php bloginfo( 'name' ); ?>
+                	<?php esc_html_e( 'Copyright &copy;', 'i-amaze' ); ?>  <?php bloginfo( 'name' ); ?>
                 </div>            
             	<div class="credit-info">
 					<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'i-amaze' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'i-amaze' ); ?>">
-						<?php printf( __( 'Powered by %s', 'i-amaze' ), 'WordPress' ); ?>
+						<?php printf( esc_attr( 'Powered by %s', 'i-amaze' ), 'WordPress' ); ?>
                     </a>
-                    <?php printf( __( ', Designed and Developed by', 'i-amaze' )); ?> 
+                    <?php esc_attr_e( ', Designed and Developed by', 'i-amaze' ); ?> 
                     <a href="<?php echo esc_url( __( 'http://www.templatesnext.org/', 'i-amaze' ) ); ?>">
-                   		<?php printf( __( 'templatesnext', 'i-amaze' ) ); ?>
+                   		<?php esc_attr_e( 'templatesnext', 'i-amaze' ); ?>
                     </a>
                 </div>
 

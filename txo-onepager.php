@@ -4,8 +4,8 @@
 		 * The template for displaying TemplatesNext OnePager Home Page
 		 *
 		 *
-		 * @package i-amaze
-		 * @since i-amaze 1.0
+		 * @package templatesnext-onepager
+		 * @since templatesnext-onepager 1.1.0
 		 */
 		
 		if (function_exists('txo_sections_show')) {  

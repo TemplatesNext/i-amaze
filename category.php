@@ -16,7 +16,7 @@ get_header(); ?>
 		<?php if ( have_posts() ) : ?>
 			<header class="archive-header">
 				<?php if ( category_description() ) : // Show an optional category description ?>
-				<div class="archive-meta"><?php echo category_description(); ?></div>
+				<div class="archive-meta"><?php echo the_archive_description(); ?></div>
 				<?php endif; ?>
 			</header><!-- .archive-header -->
 
@@ -25,7 +25,7 @@ get_header(); ?>
 				<?php get_template_part( 'content', get_post_format() ); ?>
 			<?php endwhile; ?>
 
-			<?php the_posts_pagination(); ?>
+            <?php the_posts_pagination(); ?>            
 
 		<?php else : ?>
 			<?php get_template_part( 'content', 'none' ); ?>

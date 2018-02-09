@@ -65,28 +65,11 @@ function iamaze_register_meta_boxes( $meta_boxes )
 			array(
 				'name' => __( 'Show Default i-amaze Slider', 'i-amaze' ),
 				'id'   => "{$prefix}show_slider",
+				'desc'  => __( 'Add/edit slider in menu "Appearance" > "Customize" > "Slider"', 'i-amaze' ),				
 				'type' => 'checkbox',
-				// Value can be 0 or 1
 				'std'  => 0,
 				'class' => 'show-slider',
-			),			
-			/*		
-			// Custom Title
-			array(
-				// Field name - Will be used as label
-				'name'  => __( 'Custom title', 'i-amaze' ),
-				// Field ID, i.e. the meta key
-				'id'    => "{$prefix}customtitle",
-				// Field description (optional)
-				'desc'  => __( 'Enter custom title for the page', 'i-amaze' ),
-				'type'  => 'text',
-				// Default value (optional)
-				'std'   => __( '', 'i-amaze' ),
-				// CLONES: Add to make the field cloneable (i.e. have multiple value)
-				//'clone' => true,
-				'class' => 'cust-ttl',
 			),
-			*/
 			
 			// hide breadcrum
 			array(
@@ -107,7 +90,7 @@ function iamaze_register_meta_boxes( $meta_boxes )
 				'desc'  => __( 'Enter a 3rd party slider shortcode, ex. meta slider, smart slider 2, wow slider, etc. Only works with TemplatesNext Themes ', 'i-amaze' ),
 				'type'  => 'text',
 				// Default value (optional)
-				'std'   => __( '', 'i-amaze' ),
+				'std'   => '',
 				// CLONES: Add to make the field cloneable (i.e. have multiple value)
 				//'clone' => true,
 				'class' => 'cust-ttl',
@@ -167,15 +150,13 @@ function iamaze_register_meta_boxes( $meta_boxes )
 		)
 	);		
 	
-	
-	
 	return $meta_boxes;
 }
 
 	function iamaze_get_category_list_key_array($category_name) {
 			
 		$get_category = get_categories( array( 'taxonomy' => $category_name	));
-		$category_list = array( 'all' => 'Select Category');
+		$category_list = array( 'all' => __( 'Select Category', 'i-amaze' ));
 		
 		foreach( $get_category as $category ){
 			if (isset($category->slug)) {

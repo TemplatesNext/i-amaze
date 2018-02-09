@@ -3,11 +3,11 @@ Theme Name: i-amaze
 Theme URI: http://templatesnext.in/i-amaze-landing/
 Author: templatesnext team
 Author URI: http://templatesnext.in/
-Description: i-amaze is a beautiful and flexible theme with several premium features including fullscreen slider, portfolio, testimonial, team members, etc. This highly customizable theme is ideal for startup business websites, portfolios, personal websites or blogging. Highly responsive nature of i-amaze makes it suitable for large desktop screens to small mobile screens. Some of the features are unlimited color, boxed/wide layout, custom background, custom css styling, social links, multiple blog layout, etc. i-amaze comes with the plugin “templatesnext toolkit” giving you extra flexibility and functionality which includes, shortcodes to build pages with rows/column, SEO enabled headings, portfolios, testimonials, custom blog pages, custom slider etc. You can create beautiful pages with portfolio/blog carousels, masonry blocks, services, call to act sections etc. Unlike other themes i-amaze does not use theme settings to store content and you can switch theme without losing content. i-amaze is WooCommerce ready.
-Version: 1.0.3
+Description: i-amaze is a beautiful and flexible theme with several premium features including fullscreen slider, portfolio, testimonial, team members, etc. This highly customizable theme is ideal for startup business websites, portfolios, personal websites or blogging. Highly responsive nature of i-amaze makes it suitable for large desktop screens to small mobile screens. Some of the features are unlimited color, boxed/wide layout, custom background, custom css styling, social links, multiple blog layout, etc. i-amaze comes with the plugin “templatesnext OnePager” giving you extra flexibility and functionality.
+Version: 1.1.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: One-Column, Two-Columns, Right-Sidebar, Custom-Colors, Custom-Menu,  Featured-Images, Flexible-Header, Full-Width-Template, Microformats, Post-Formats, Sticky-Post, Theme-Options, Threaded-Comments, Translation-Ready
+Tags: one-column, two-columns, right-sidebar, custom-colors, custom-menu,  featured-images, flexible-header, full-width-template, microformats, sticky-post, theme-options, threaded-comments, translation-ready
 Text Domain: i-amaze
 
 iamaze WordPress Theme, Copyright 2014 WordPress.org
@@ -1308,9 +1308,6 @@ ul.nav-container ul a:hover,
 	overflow: hidden;
 }
 
-.da-img {
-}
-
 .ibanner ul,
 .ibanner ul li {
 	margin: 0px;
@@ -2061,6 +2058,7 @@ article .post-mainpart > .entry-content {
 	-ms-hyphens:     auto;
 	hyphens:         auto;
 	word-wrap: break-word;
+
 }
 
 .page .site-content {
@@ -2191,7 +2189,9 @@ footer.entry-meta {
 	width: 100%;
 	text-align: center;
 	background-color: #95C837;
-	background-image: url(images/trans-pat-7.png);
+	/*
+	background-image: url(images/trans-pat-2.png);
+	*/
 	background-repeat: repeat;
 	background-attachment: fixed;
 }
@@ -3029,6 +3029,30 @@ footer.entry-meta {
 	text-decoration: none;
 }
 
+.post-navigation {
+	background-color: #fff;
+	font-weight: 400;
+	padding: 12px 16px;
+	margin: auto 0;
+	border: 1px solid #e7e7e7;
+	margin-bottom: 48px;
+	margin-top: 32px;
+}
+
+.post-navigation .nav-links {
+	margin: 0 auto;
+}
+
+.post-navigation a[rel="next"] {
+	float: right;
+	text-align: right;
+}
+
+nav.navigation .nav-links a,
+nav.navigation .nav-links a:visited {
+	color: #777777;
+}
+
 /* New pagination styling */
 
 .pagination {
@@ -3096,7 +3120,6 @@ nav.navigation .nav-links a,
 nav.navigation .nav-links a:visited {
 	color: #777777;
 }
-
 
 /**
  * 8.8 Author Bio
@@ -3758,7 +3781,6 @@ nav.navigation .nav-links a:visited {
 	background-color: #272727;
 	color: #777777;
 	text-align: center;
-	background-image: url(images/trans-pat-7-b.png);
 	background-repeat: repeat;
 	background-attachment: fixed;		
 }
@@ -3781,9 +3803,6 @@ nav.navigation .nav-links a:visited {
 	background-color: #383838;
 	padding: 20px 0;
 	clear: both;
-	
-	
-	background-image: url(images/trans-pat-7-b.png);
 	background-repeat: repeat;
 	background-attachment: fixed;		
 }
@@ -3798,13 +3817,10 @@ nav.navigation .nav-links a:visited {
 	display: block;
 	clear: both;
 	background-color: #383838;
-	
-	background-image: url(images/trans-pat-7-b.png);
+	/*
+	background-image: url(images/trans-pat-2.png);*/
 	background-repeat: repeat;
 	background-attachment: fixed;		
-}
-
-.site-footer .sidebar-container {
 }
 
 .site-footer .widget-wrap {
@@ -4151,7 +4167,150 @@ nav.navigation .nav-links a:visited {
 	color: #999;	
 }
 
+.site {
+  	position:relative;
+	border-left: 0px solid #CCC;
+	border-right: 0px solid #CCC;
+}
 
+.site:before, 
+.site:after {
+	content:"";
+    position:absolute; 
+    z-index:-1;
+    -webkit-box-shadow:0 0 4px rgba(0,0,0,0.1);
+    -moz-box-shadow:0 0 4px rgba(0,0,0,0.1);
+    box-shadow:0 0 4px rgba(0,0,0,0.1);
+    top:0px;
+    bottom:0px;
+    left:0;
+    right:0;
+    -moz-border-radius:100px / 2px;
+    border-radius:100px / 2px;
+}
+
+
+.nx-fullscreen .site-header:not(.fixeddiv) .site-title,
+.nx-fullscreen .site-header:not(.fixeddiv) .site-description {
+	color: #FFF;
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) .trans-logo {
+	display: inline-block;
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) .normal-logo {
+	display: none;
+}
+
+
+.nx-fullscreen .site-header:not(.fixeddiv) ul.nav-container > li > a,
+.nx-fullscreen .site-header:not(.fixeddiv) .nav-container > ul > li > a {
+	color: #FFFFFF;
+}
+/*
+.nx-fullscreen .utilitybar {
+	display: none;
+}
+*/
+.nx-fullscreen .site .headerwrap {
+	background:  rgba(0,0,0,0.1);
+	background: transparent;
+	position: relative;
+	height: 0px;
+	min-height: 0px;
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	background-color: rgba(0,0,0,0.1);
+	min-height: 88px;
+	border-bottom: 1px solid rgba(0,0,0,0.0);
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) .nav-container .nav-menu > li > a,
+.nx-fullscreen .site-header:not(.fixeddiv) .nav-container .nav-menu > li > a:visited {
+	color: #FFF;
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) .search-field,
+.nx-fullscreen .site-header:not(.fixeddiv) .search-field:focus {
+	color: #FFF;
+}
+
+.nx-fullscreen .site-header:not(.fixeddiv) .searchico:before {
+	color: #FFF;
+}
+
+.da-img .nx-tscreen {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background-color: rgba(0,0,0,0.2);
+}
+
+.slider-content-wrap {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.ibanner .da-slider .owl-controls .owl-page span {
+	background-color: rgba(0,0,0,0.0);
+	background: transparent;
+	width: 12px;
+	height: 12px;
+	border-radius: 0px;
+	border-width: 1px;
+	border-style: solid;
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, .3);
+}
+
+.nx-slider-container {
+  position: relative;
+  top: 50%;
+  top: calc( 50% + 32px );  
+  transform: translateY(-50%);
+}
+/*
+.da-img {
+	min-height: 640px;
+} 	
+*/
+.utilitybar {
+	border-bottom: none;
+	color: #fff;
+}
+
+.topphone,
+.topphone .topbarico {
+	color: #FFFFFF;
+}
+
+.socialicons ul.social li a .socico {
+	color: #FFF;
+	background-color: rgba(255,255,255,0.2);
+}
+
+.socialicons ul.social li a:hover .socico {
+	color: #FFF;
+	background-color: rgba(255,255,255,1);	
+}
+
+nav.navigation .nav-links a,
+nav.navigation .nav-links a:visited {
+	background-color: #FFF;
+}
+nav.navigation .nav-links a:hover {
+	color: #FFF;
+}
 
 /**
  * 12.0 Media Queries
@@ -4265,6 +4424,10 @@ nav.navigation .nav-links a:visited {
 	.wprm-on .menu-toggle {
 		display: none;
 	}
+
+	.da-img {
+		min-height: 560px;
+	} 	
 	
 }
 
@@ -4431,6 +4594,10 @@ nav.navigation .nav-links a:visited {
 	.nx-slider-container {
 		padding-top: 0px;
 	}
+
+	.da-img {
+		min-height: 480px;
+	} 	
 	
 }
 
@@ -4689,30 +4856,6 @@ nav.navigation .nav-links a:visited {
 	}
 }
 
-
-.site
-{
-  	position:relative;
-	border-left: 0px solid #CCC;
-	border-right: 0px solid #CCC;
-}
-
-.site:before, 
-.site:after
-{
-	content:"";
-    position:absolute; 
-    z-index:-1;
-    -webkit-box-shadow:0 0 4px rgba(0,0,0,0.1);
-    -moz-box-shadow:0 0 4px rgba(0,0,0,0.1);
-    box-shadow:0 0 4px rgba(0,0,0,0.1);
-    top:0px;
-    bottom:0px;
-    left:0;
-    right:0;
-    -moz-border-radius:100px / 2px;
-    border-radius:100px / 2px;
-} 
 /**/
 
 @media (min-width: 1070px) {
@@ -4769,177 +4912,8 @@ nav.navigation .nav-links a:visited {
 	}
 }
 
-
-/*.ibanner-on */
-
-.nx-transheader .site-header:not(.fixeddiv) .site-title,
-.nx-transheader .site-header:not(.fixeddiv) .site-description {
-	color: #FFF;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .trans-logo {
-	display: inline-block;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .normal-logo {
-	display: none;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) ul.nav-container > li > a,
-.nx-transheader .site-header:not(.fixeddiv) .nav-container > ul > li > a {
-	color: #FFFFFF;
-}
-
-.nx-transheader .utilitybar {
-	display: none;
-}
-
-.nx-transheader .site .headerwrap {
-	background:  rgba(0,0,0,0.1);
-	background: transparent;
-	position: relative;
-	height: 0px;
-	min-height: 0px;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	right: 0px;
-	background-color: rgba(0,0,0,0.1);
-	min-height: 88px;
-	border-bottom: 1px solid rgba(0,0,0,0.0);
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .nav-container .nav-menu > li > a,
-.nx-transheader .site-header:not(.fixeddiv) .nav-container .nav-menu > li > a:visited {
-	color: #FFF;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .search-field,
-.nx-transheader .site-header:not(.fixeddiv) .search-field:focus {
-	color: #FFF;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .searchico:before {
-	color: #FFF;
-}
-
-.nx-transheader .site-header:not(.fixeddiv) .home-link .site-title,
-.nx-transheader .site-header:not(.fixeddiv) .home-link .site-description {
-	color: #FFF;
-}
-
-
-.home.nx-transheader .site .iheader {
-	min-height: 120px;
-	height: 240px;
-	background-image: url(images/bg/bg7.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
-	
-	box-shadow: inset 0px -12px 48px -12px rgba(0,0,0,.48);
-	position: relative;	
-}
-
-.ibanner-off.home .site .iheader:after {
-	position: absolute;
-	display: block;
-	content: " ";
-	width: 100%;
-	height: 100%;
-	left: 0px;
-	top: 0px;
-	z-index: 1;
-	background-image: url(images/homepage-banner-bg3.png);
-	background-repeat: repeat;
-	background-position: left top;	
-}
-
-.home.nx-transheader .site .iheader .titlebar {
-	position: relative;
-	height: 100%;
-}
-
-.home.nx-transheader .site .iheader .titlebar h1.entry-title {
-	padding: 0px;
-	margin: 0px;
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
-	padding-left: 32px;
-	z-index: 2;
-}
-
-
-.da-img .nx-tscreen {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	bottom: 0px;
-	background-color: rgba(0,0,0,0.2);
-}
-
-.slider-content-wrap {
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
-.nx-slider-container {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-/*
-.pace {
-  -webkit-pointer-events: none;
-  pointer-events: none;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-.pace.pace-inactive .pace-progress {
-  display: none;
-}
-
-.pace .pace-progress {
-  position: fixed;
-  z-index: 2000000;
-  top: 0;
-  right: 0;
-  height: 5rem;
-  width: 5rem;
-
-  -webkit-transform: translate3d(0, 0, 0) !important;
-  -ms-transform: translate3d(0, 0, 0) !important;
-  transform: translate3d(0, 0, 0) !important;
-}
-
-.pace .pace-progress:after {
-  display: block;
-  position: absolute;
-  top: 32px;
-  right: 32px;
-  content: attr(data-progress-text);
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 100;
-  font-size: 5rem;
-  line-height: 1;
-  text-align: right;
-  color: rgba(229, 126, 38, 0.19999999999999996);
-}
-*/
-
 /* This is a compiled file, you should be editing the file in the templates directory */
-/* This is a compiled file, you should be editing the file in the templates directory */
+
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
@@ -5064,8 +5038,334 @@ body.pace-done .site .pacer-cover {
 	display: none;
 }
 
-.iheader span.customize-partial-edit-shortcut {
-	top: auto;
-	bottom: 64px;
+.home.home-slider-off .site .iheader {
+	position: relative;
+	overflow: hidden;	
 }
 
+.home.home-slider-off .site .iheader .imagebg {
+	display: block;
+	position: absolute;
+	z-index: 2;
+	content: " ";
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+}
+
+.home.home-slider-off .site .iheader:after {
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	content: " ";
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+	background-image: url(images/homepage-banner-bg3.png);
+	background-repeat: repeat;
+	background-position: 0px 0px;
+}
+
+.home.home-slider-off .site .iheader .titlebar {
+	position: relative;
+	display: block;
+	z-index: 6;
+	text-align: center;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;	
+}
+
+.home.home-slider-off .site .iheader .titlebar-o h1 {
+	position: absolute;
+	bottom: 0px;
+}
+
+.home.home-slider-off .site .iheader .titlebar h1 {
+	position: relative;
+	text-transform: uppercase;
+	font-size: 56px;
+	font-weight: 500;
+	text-align: center;
+	line-height: 64px;
+
+	margin: auto;
+	width: 100%;
+	display: block;
+}
+
+.video-background {
+	position: absolute;
+	top: 0; 
+	right: 0; 
+	bottom: 0; 
+	left: 0;
+	z-index: 3;
+}
+.video-foreground,
+.video-background iframe,
+.video-background .video-player {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+@media (min-aspect-ratio: 16/9) {
+  .video-foreground { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .video-foreground { width: 300%; left: -100%; }
+}
+
+.editslider:before,
+.editeheader:before,
+.tx-slider-shortcut:before {
+	font-family: dashicons;
+	content: "\f464";
+	position: absolute;
+	color: #FFF;
+	left: 0px;
+	top: 0px;
+	color: #999;
+	font-size: 24px;
+	z-index: 104;
+	display: block;
+
+	line-height: 32px;	
+	height: 32px;
+	width: 32px;
+}
+
+.editslider,
+.editslider:visited,
+.tx-slider-shortcut,
+.tx-slider-shortcut:visited {
+	display: inline-block;
+	color: #FFF;
+	text-align: center;
+	padding: 6px 12px;
+	background-color: #C00;
+	cursor: pointer;
+	z-index: 401;
+	position: relative;	
+	padding-left: 32px;
+	margin-top: 6px;
+	color: #FFF;
+	text-decoration: none;
+	background-color: #0085ba;
+	border: 2px solid #CCC;
+	border-radius: 12px;
+	
+	position: absolute;
+	bottom: 64px;
+	left: calc( 50% - 56px );
+}
+
+.editeheader,
+.editeheader:visited {
+	display: inline-block;
+	color: #FFF;
+	text-align: center;
+	padding: 6px 12px;
+	background-color: #C00;
+	cursor: pointer;
+	z-index: 401;
+	position: relative;	
+	padding-left: 32px;
+	margin-top: 6px;
+	color: #FFF;
+	text-decoration: none;
+	background-color: #0085ba;
+	border: 2px solid #CCC;
+	border-radius: 12px;
+	
+	position: absolute;	
+	bottom: 108px;
+	left: calc( 50% - 118px );
+}
+
+.editslider:hover,
+.editeheader:hover,
+.tx-slider-shortcut:hover {
+	color: #000;
+	background-color: #CCC;
+	text-decoration: none;
+	border: 2px solid #333;	
+}
+
+.tx-slider-shortcut,
+.tx-slider-shortcut:visited {
+	bottom: -10px;
+}
+
+.moretag.notoppad,
+.entry-content a.moretag.noptoppad {
+	padding-top: 0px;
+	padding-bottom: 6px;
+}
+
+@media (max-width: 999px) {
+	.home.home-slider-off .site .iheader .titlebar h1 {
+		text-transform: uppercase;
+		font-size: 48px;
+		line-height: 48px;
+		font-weight: 500;
+	}
+}
+
+@media (max-width: 767px) {
+	.home.home-slider-off .site .iheader .titlebar h1 {
+		font-size: 24px;
+		line-height: 24px;
+		font-weight: 400;
+	}
+}
+
+.wp-custom-header iframe,
+.wp-custom-header img,
+.wp-custom-header video {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
+
+.topsearch button.customize-partial-edit-shortcut-button {
+	left: -16px;
+	top: -12px;
+}
+
+
+.nx-logo-shortcut {
+	position: relative;
+	overflow: visible;
+	width: 280px;
+	height: 0px;
+}
+.nx-editshortcut:before {
+	font-family: dashicons;
+	content: "\f464";
+	position: absolute;
+	color: #FFF;
+	left: 0px;
+	top: 0px;
+	color: #999;
+	font-size: 20px;
+	z-index: 104;
+	display: block;
+
+	line-height: 28px;	
+	height: 28px;
+	width: 28px;
+}
+
+.nx-editshortcut,
+.nx-editshortcut:visited {
+	display: inline-block;
+	color: #FFF;
+	text-align: center;
+	padding: 4px 12px;
+	background-color: #C00;
+	cursor: pointer;
+	z-index: 401;
+	position: relative;	
+	padding-left: 28px;
+	margin-top: 2px;
+	color: #FFF;
+	font-size: 11px;
+	text-decoration: none;
+	background-color: #0085ba;
+	border: 2px solid #CCC;
+	border-radius: 12px;
+	position: absolute;
+	width: auto;
+}
+
+.nx-editshortcut:hover {
+	color: #000;
+	background-color: #CCC;
+	text-decoration: none;
+	border: 2px solid #333;	
+}
+
+.nx-editshortcut {
+	left: 0px;
+	top: 0px;
+}
+
+.nx-normal-logo {
+	left: auto;
+	top: 2px;
+	right: -92px;
+}
+
+.nx-trans-logo {
+	left: auto;
+	top: 36px;
+	left: -122px;
+}
+
+.woocommerce section.related.products ul.products li.product, 
+.woocommerce-page section.related.products ul.products li.product {
+	width: 100%;
+	padding-right: 12px;
+	padding-left: 12px;
+}
+
+.woocommerce span.onsale {
+	top: 32px;
+	left: 8px;
+}
+
+.woocommerce section.related.products ul.products li.product .onsale {
+	margin-right: 12px;
+	margin-top: 0px;
+}
+
+.colored-drop ul.nav-container ul, 
+.colored-drop .nav-container ul ul {
+	background-color: #95c837;
+	border-radius: 0px;
+	border: none;
+}
+
+.colored-drop .nav-container ul ul a,
+.colored-drop ul.nav-container ul a {
+	color: #FFF;
+	background-color: #95c837;	
+	border-top: 1px solid rgba(255,255,255,0.3);
+	width: 240px;
+}
+
+.colored-drop .nav-container ul ul a:hover,
+.colored-drop ul.nav-container ul a:hover {
+	color: #FFF;
+	background-color: #333;
+}
+
+.colored-drop ul ul li:last-child a {
+	border-bottom: 3px solid #FFF;
+}
+
+.colored-drop ul.nav-container ul .current_page_item > a, 
+.colored-drop ul.nav-container ul .current_page_ancestor > a,
+.colored-drop .nav-container ul ul .current_page_item > a, 
+.colored-drop .nav-container ul ul .current_page_ancestor > a {
+	color: #FFF;
+} 
+
+.colored-drop .nav-container li:last-child .sub-menu ul,
+.colored-drop .nav-container li:last-child .children ul {
+	width: 240px;
+}
+
+.sldprev, .ibanner .da-slider .owl-prev, 
+.sldnext, .ibanner .da-slider .owl-next,
+.sldprev:hover, .ibanner .da-slider .owl-prev:hover, 
+.sldnext:hover, .ibanner .da-slider .owl-next:hover {
+	color: #FFFFFF;
+}
