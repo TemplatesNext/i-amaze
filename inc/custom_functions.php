@@ -99,7 +99,7 @@ function iamaze_ibanner_slider () {
 	);
 	
 	$slides = get_theme_mod('iamaze_slides', $slides_preset);
-	
+
 	foreach( $slides as $slide ) {
 		If ( $slide_no <= 4 )
 		{
@@ -127,7 +127,7 @@ function iamaze_ibanner_slider () {
 				}
 				$strret .= '<div class="slider-content-wrap"><div class="nx-slider-container">';
 				$strret .= '<h2>'.$slide_title.'</h2>';
-				if( !empty($slide_desc) ){$strret .= '<p>'.$slide_desc.'</p>';}
+				if( !empty($slide_desc) ){$strret .= '<p>'.htmlspecialchars_decode($slide_desc).'</p>';}
 				if( !empty($slide_linktext) ){$strret .= '<a href="'.$slide_linkurl.'" class="da-link">'.$slide_linktext.'</a>';}
 				$strret .= '</div></div>';
 			}
@@ -162,7 +162,7 @@ function iamaze_ibanner_slider () {
         echo '        <h1>';
 		
 		if ($banner_text) {
-			echo $banner_text;
+			echo htmlspecialchars_decode($banner_text);
 		} 
         echo '        </h1>';
 		echo ' 		  <h2>';

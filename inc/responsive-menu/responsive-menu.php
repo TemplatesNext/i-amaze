@@ -38,7 +38,7 @@ function iamaze_menu() {
             </div>
 		</div>
 
-		<div id="wprmenu_menu" class="wprmenu_levels <?php echo esc_attr(get_theme_mod('position', 'left')); ?> wprmenu_custom_icons">
+		<div id="wprmenu_menu" class="wprmenu_levels <?php echo esc_attr(get_theme_mod('position', 'top')); ?> wprmenu_custom_icons">
 			<?php if( get_theme_mod('search_box', 'below_menu') == 'above_menu' ) { ?> 
 			<div class="wpr_search">
 				<?php get_search_form(); ?>
@@ -65,12 +65,12 @@ function iamaze_header_styles() {
 		?>
 		<style id="wprmenu_css" type="text/css" >
 			/* apply appearance settings */
-			.menu-toggle,
-			#navbar {
+			.menu-toggle {
 				display: none!important;
 			}
 			@media (max-width: 1069px) {
-				.menu-toggle,.topsearch {
+				.menu-toggle,.topsearch,
+				#navbar {
 					display: none!important;
 				}				
 			}

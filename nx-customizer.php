@@ -648,7 +648,7 @@ function iamaze_custom_setting( $controls ) {
 		'label' => __('Menu Open Direction', 'i-amaze'),
 		'description' => __('Select the direction from where menu will open.', 'i-amaze'),
 		'settings' => 'position',
-		'default' => 'left',
+		'default' => 'top',
 		'choices' => array('left' => 'Left','right' => 'Right', 'top' => 'Top' ),
 		'type' => 'select',
         'section'  => 'rmsettings',			

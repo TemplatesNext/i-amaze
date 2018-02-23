@@ -240,7 +240,7 @@ jQuery(document).ready(function($) {
 	var top_spacing = 00;
 	var waypoint_offset = 00;
 	
-	if( $( window ).width() > 999 )
+	if( $( window ).width() > 1069 )
 	{
 		if ( $(".admin-bar").length>0 )
 		{
