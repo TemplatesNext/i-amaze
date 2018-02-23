@@ -232,6 +232,16 @@ function iamaze_custom_setting( $controls ) {
 		'section'     => 'basic',
 		'default'     => 1,
 		'priority'    => 3,
+	);
+	
+	$controls[] = array(
+		'type'        => 'switch',
+		'settings'     => 'pre_loader',
+		'label'       => __( 'Turn ON Page Preloader', 'i-amaze' ),
+		'description' => __( 'Turn ON/OFF loding animation before page load', 'i-amaze' ),
+		'section'     => 'basic',
+		'default'     => 0,		
+		'priority'    => 3,
 	);				
 	
 	$controls[] = array(
@@ -532,14 +542,34 @@ function iamaze_custom_setting( $controls ) {
 	$controls[] = array(
 		'type'        => 'slider',
 		'settings'    => 'blog_header_height',
-		'label'       => __( 'Image/Vedio Header Height (in %)', 'i-amaze' ),
-		'section'     => 'blogpage',
+		'label'       => __( 'Image/Videio Header Height (in %)', 'i-amaze' ),
+		'section'     => 'header_image',
 		'default'     => 100,
 		'choices'     => array(
 			'min'  => '0',
 			'max'  => '100',
 			'step' => '1',
 		),
+		'priority'    => 10,
+	);
+	
+    $controls[] = array(
+        'type'     => 'text',
+        'settings'  => 'tagline_two',
+        'label'    => __( 'Secondary Tagline', 'i-amaze' ),
+        'section'  => 'title_tagline',
+        'default'  => '',
+        'priority' => 10,
+    );	
+	
+	$controls[] = array(
+		'type'        => 'switch',
+		'settings'     => 'header_overlay',
+		'label'       => __( 'Turn ON/OFF Checkered Background', 'i-amaze' ),
+		'description' => __( 'Turn ON or OF the image/videio header background', 'i-amaze' ),
+		'section'     => 'header_image',
+		'default'     => 1,
+		'priority'    => 0,
 	);		
 	
 

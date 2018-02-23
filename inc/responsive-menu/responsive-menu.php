@@ -26,14 +26,16 @@ function iamaze_menu() {
 	if( get_theme_mod('enabled', 1) ) :
 		?>
 		<div id="wprmenu_bar" class="wprmenu_bar">
-			<div class="wprmenu_icon">
-				<span class="wprmenu_ic_1"></span>
-				<span class="wprmenu_ic_2"></span>
-				<span class="wprmenu_ic_3"></span>
-			</div>
-			<div class="menu_title">
-				<?php echo esc_html(get_theme_mod('bar_title', __('MENU', 'i-amaze'))); ?>
-			</div>
+        	<div class="wprmenu-inner">
+                <div class="wprmenu_icon">
+                    <span class="wprmenu_ic_1"></span>
+                    <span class="wprmenu_ic_2"></span>
+                    <span class="wprmenu_ic_3"></span>                    
+                </div>
+                <div class="menu_title">
+                    <?php echo esc_html(get_theme_mod('bar_title', __('MENU', 'i-amaze'))); ?>
+                </div>
+            </div>
 		</div>
 
 		<div id="wprmenu_menu" class="wprmenu_levels <?php echo esc_attr(get_theme_mod('position', 'left')); ?> wprmenu_custom_icons">
@@ -63,7 +65,8 @@ function iamaze_header_styles() {
 		?>
 		<style id="wprmenu_css" type="text/css" >
 			/* apply appearance settings */
-			.menu-toggle {
+			.menu-toggle,
+			#navbar {
 				display: none!important;
 			}
 			@media (max-width: 1069px) {

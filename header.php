@@ -38,6 +38,16 @@ global $post;
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> style="">
+	<?php if( get_theme_mod('pre_loader', 0) == 1 ) { ?>	
+	<div class="nx-ispload">
+        <div class="nx-ispload-wrap">
+            <div class="spinner">
+              <div class="dot1"></div>
+              <div class="dot2"></div>
+            </div>
+        </div>    
+    </div>
+	<?php } ?>
 	<div id="page" class="hfeed site">
 
     	<div class="pacer-cover"></div>
@@ -126,7 +136,7 @@ global $post;
         <!-- #Banner -->
         <?php
 		
-		$hide_title = $show_slider = $other_slider = $custom_title = $hide_breadcrumb = "";
+		$hide_title = $show_slider = $other_slider = $custom_title = $hide_breadcrumb = $image_header_overlay = $overlay_class = "";
 		if ( function_exists( 'rwmb_meta' ) ) {
 			$hide_title = rwmb_meta('iamaze_hidetitle');
 			$show_slider = rwmb_meta('iamaze_show_slider');
@@ -138,10 +148,20 @@ global $post;
 		$hide_front_slider = get_theme_mod('slider_stat', 0);
 		$other_front_slider = get_theme_mod('blogslide_scode', '');
 		$itrans_slogan = esc_attr(get_theme_mod('banner_text', get_bloginfo( 'description' )));
+		$itrans_subslogan = esc_attr(get_theme_mod('tagline_two', ''));
 		$blog_header_heigh = esc_attr(get_theme_mod('blog_header_height', 100));
+		$image_header_overlay = get_theme_mod('header_overlay', 1);
 		
 		$other_slider = esc_html($other_slider);
 		$other_front_slider = esc_html($other_front_slider);
+		
+		if( $image_header_overlay == 1 )
+		{
+			$overlay_class = "chekered";
+		} else
+		{
+			$overlay_class = "no-overlay";
+		}
 		
 		if($other_slider) :
 		?>
@@ -163,7 +183,7 @@ global $post;
             </div>
            
         	<?php else : ?>
-            <div class="iheader ibanner hideubar" id="ibanner" data-header-height="<?php echo $blog_header_heigh; ?>" data-video-id="<?php echo esc_attr($video_id); ?>" data-edittext="<?php esc_attr_e( 'Switch Slider', 'i-amaze' ); ?>" data-editheader="<?php esc_attr_e( 'Change Background Image/Video', 'i-amaze' ); ?>">
+            <div class="iheader ibanner hideubar <?php echo $overlay_class; ?>" id="ibanner" data-header-height="<?php echo $blog_header_heigh; ?>" data-video-id="<?php echo esc_attr($video_id); ?>" data-edittext="<?php esc_attr_e( 'Switch Slider', 'i-amaze' ); ?>" data-editheader="<?php esc_attr_e( 'Change Background Image/Video', 'i-amaze' ); ?>">
             	<div class="imagebg" style="background-image: url('<?php header_image(); ?>');"></div>
 				<?php if( $video_id ) : ?>         
                 <div class="video-background">
@@ -175,6 +195,7 @@ global $post;
                 	<div class="video-foreground">
                         <video width="100%" height="100%" autoplay loop>
                             <source src="<?php echo esc_url(get_header_video_url()); ?>" type="video/mp4">
+                            <img src="<?php header_image(); ?>" alt="">
                         </video>
                     </div>                
                 </div>             
@@ -183,10 +204,17 @@ global $post;
                     <h1 class="entry-title">
                         <?php
                             if ($itrans_slogan) {
-                                echo esc_html($itrans_slogan);
+                                echo htmlspecialchars_decode($itrans_slogan);
                             }
                         ?>	                 
                     </h1>
+                    <div class="sub-tagline">
+                    	<?php
+                    		if($itrans_subslogan) 	{
+								echo $itrans_subslogan;
+							}
+						?>
+                    </div>
                 </div>
             </div>                                    
         	<?php endif; ?>            

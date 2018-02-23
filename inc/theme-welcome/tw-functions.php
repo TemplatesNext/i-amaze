@@ -7,7 +7,7 @@
  *
  * @return string/boolean       The plugin file/folder relative to the plugins folder path (e.g. "my-plugin/my-plugin.php") or false
  */
-function iexcel_is_plugin_installed($pluginTitle)
+function iamaze_is_plugin_installed($pluginTitle)
 {
     // get all the plugins
     $installedPlugins = get_plugins();
@@ -35,7 +35,7 @@ function iexcel_is_plugin_installed($pluginTitle)
 * @return string $url action url
 */
 
-function iexcel_plugin_install($plugin_slug)
+function iamaze_plugin_install($plugin_slug)
 {
 	$nonce_install  = wp_nonce_url(
 		add_query_arg(
@@ -52,7 +52,7 @@ function iexcel_plugin_install($plugin_slug)
 	return $nonce_install;
 }
 
-function iexcel_plugin_activation( $plugin, $slug, $plugin_filename ) {
+function iamaze_plugin_activation( $plugin, $slug, $plugin_filename ) {
 	if ( strpos( $plugin, '/' ) ) {
 		$plugin = str_replace( '\/', '%2F', $plugin );
 	}

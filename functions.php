@@ -515,6 +515,12 @@ function iamaze_body_class( $classes ) {
 		$classes[] = 'home-slider-on';
 	}
 	
+	// Add PreLoader Class
+	if( get_theme_mod('pre_loader', 0) == 1 )
+	{
+		$classes[] = 'nx-preloader';
+	}
+	
 	return $classes;
 }
 add_filter( 'body_class', 'iamaze_body_class' );

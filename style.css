@@ -4,7 +4,7 @@ Theme URI: http://templatesnext.in/i-amaze-landing/
 Author: templatesnext team
 Author URI: http://templatesnext.in/
 Description: i-amaze is a beautiful and flexible theme with several premium features including fullscreen slider, portfolio, testimonial, team members, etc. This highly customizable theme is ideal for startup business websites, portfolios, personal websites or blogging. Highly responsive nature of i-amaze makes it suitable for large desktop screens to small mobile screens. Some of the features are unlimited color, boxed/wide layout, custom background, custom css styling, social links, multiple blog layout, etc. i-amaze comes with the plugin “templatesnext OnePager” giving you extra flexibility and functionality.
-Version: 1.1.2
+Version: 1.1.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: one-column, two-columns, right-sidebar, custom-colors, custom-menu,  featured-images, flexible-header, full-width-template, microformats, sticky-post, theme-options, threaded-comments, translation-ready
@@ -4597,8 +4597,7 @@ nav.navigation .nav-links a:hover {
 
 	.da-img {
 		min-height: 480px;
-	} 	
-	
+	} 
 }
 
 @media (max-width: 580px) {
@@ -5053,6 +5052,7 @@ body.pace-done .site .pacer-cover {
 	left: 0px;
 	right: 0px;
 	top: 0px;
+	background-attachment: fixed;
 }
 
 .home.home-slider-off .site .iheader:after {
@@ -5064,6 +5064,9 @@ body.pace-done .site .pacer-cover {
 	width: 100%;
 	height: 100%;
 	z-index: 5;
+}
+
+.home.home-slider-off .site .iheader.chekered:after {
 	background-image: url(images/homepage-banner-bg3.png);
 	background-repeat: repeat;
 	background-position: 0px 0px;
@@ -5095,6 +5098,14 @@ body.pace-done .site .pacer-cover {
 	margin: auto;
 	width: 100%;
 	display: block;
+}
+
+.sub-tagline {
+	display: block;
+	clear: both;
+	color: #FFF;
+	font-size: 20px;
+	padding: 6px 16px;
 }
 
 .video-background {
@@ -5216,6 +5227,10 @@ body.pace-done .site .pacer-cover {
 		line-height: 48px;
 		font-weight: 500;
 	}
+	.sub-tagline {
+		font-size: 14px;
+		padding: 4px 6px;
+	}	
 }
 
 @media (max-width: 767px) {
@@ -5368,4 +5383,88 @@ body.pace-done .site .pacer-cover {
 .sldprev:hover, .ibanner .da-slider .owl-prev:hover, 
 .sldnext:hover, .ibanner .da-slider .owl-next:hover {
 	color: #FFFFFF;
+}
+
+#wprmenu_bar {
+	padding-left: 0px!important;
+	padding-right: 0px!important;
+}
+
+.wprmenu-inner {
+	display: block;
+	padding-left: 16px!important;
+	padding-right: 16px!important;	
+}
+
+/*
+Preloader
+*/
+
+.nx-preloader .nx-ispload {
+	display: block;
+	position: fixed;
+	background-color: #77be32;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 9999999999;
+	color: #FFF;
+}
+.nx-preloader .nx-ispload-wrap {
+	display: block;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	top: calc( 50% - 20px );
+	transform: translateY(-50%);
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
+}
+
+.dot1, .dot2 {
+  width: 60%;
+  height: 60%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  background-color: #FFF;
+  border-radius: 100%;
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.dot2 {
+  top: auto;
+  bottom: 0;
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
 }

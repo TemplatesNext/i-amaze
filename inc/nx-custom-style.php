@@ -29,9 +29,9 @@
 
 			echo '<style type="text/css">'. "\n";
 			
-			echo 'themecolor {color: '.$primary_color.';}';
-			echo 'themebgcolor {background-color: '.$primary_color.';}';
-			echo 'themebordercolor {border-color: '.$primary_color.';}';	
+			echo '.themecolor {color: '.$primary_color.';}';
+			echo '.themebgcolor {background-color: '.$primary_color.';}';
+			echo '.themebordercolor {border-color: '.$primary_color.';}';	
 			
 			echo '.tx-slider .owl-pagination .owl-page > span { background: transparent; border-color: '.$primary_color.';  }';
 			echo '.tx-slider .owl-pagination .owl-page.active > span { background-color: '.$primary_color.'; }';
@@ -65,7 +65,7 @@
 
 			echo '.format-gallery .entry-content .page-links a:hover,.format-audio .entry-content .page-links a:hover,.format-status .entry-content .page-links a:hover,.format-video .entry-content .page-links a:hover,.format-chat .entry-content .page-links a:hover,.format-quote .entry-content .page-links a:hover,.page-links a:hover {color: '.$primary_color.';}';
 
-			echo '.iheader.front {background-color: '.$primary_color.';}';
+			echo '.iheader.front, .nx-preloader .nx-ispload {background-color: '.$primary_color.';}';
 
 			echo '.navigation a,.tx-post-row .tx-folio-title a:hover,.tx-blog .tx-blog-item h3.tx-post-title a:hover {color: '.$primary_color.';}';
 

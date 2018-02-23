@@ -146,4 +146,21 @@
 	font-size: 15px; 
 	color: #555;
 }				
-		
+
+.welcome-panel a.button.button-hero.install-now {
+	background-color: #e57e26;
+	color: #FFFFFF;
+	border: 1px solid #bf5800;
+	border-bottom: 2px solid #bf5800;
+}
+
+.welcome-panel a.button.button-hero.install-now:hover {
+	background-color: #d9690a;
+	color: #FFFFFF;
+	border: 1px solid #bf5800;	
+}
+
+.welcome-panel .nx-info-desc a.button.updating-message {
+	border: 0px solid #FFF;
+	padding: 24px 24px 0px 24px;
+}
