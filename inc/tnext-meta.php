@@ -55,29 +55,30 @@ function iamaze_register_meta_boxes( $meta_boxes )
 		'fields' => array(
 			// Hide Title
 			array(
-				'name' => __( 'Hide Title', 'i-amaze' ),
-				'id'   => "{$prefix}hidetitle",
-				'type' => 'checkbox',
+				'name' => __( 'Titlebar/Image Header Type', 'i-amaze' ),
+				'id'   => "{$prefix}header_type",
+				'type' => 'button_group',
 				// Value can be 0 or 1
-				'std'  => 0,
+				'options'  => array(
+					'1'     => 'Normal Page Title Bar',
+					'2'    	=> 'Default Image/Video Header',
+					'3' 	=> 'I-AMAZE Slider',
+					'0' 	=> 'None',			
+				),
+				'inline'   => true,
+				'multiple' => false,	
+				'desc'  => __( 'If 3rd party shortcode use, this setting will be overridden.', 'i-amaze' ),			
+				'std'  => '1',
 				'class' => 'hide-ttl',
 			),
-			array(
-				'name' => __( 'Show Default i-amaze Slider', 'i-amaze' ),
-				'id'   => "{$prefix}show_slider",
-				'desc'  => __( 'Add/edit slider in menu "Appearance" > "Customize" > "Slider"', 'i-amaze' ),				
-				'type' => 'checkbox',
-				'std'  => 0,
-				'class' => 'show-slider',
-			),
-			
 			// hide breadcrum
 			array(
 				'name' => __( 'Hide breadcrumb', 'i-amaze' ),
 				'id'   => "{$prefix}hide_breadcrumb",
-				'type' => 'checkbox',
+				'type' => 'switch',
 				// Value can be 0 or 1
 				'std'  => 0,
+				'desc'  => __( 'Only appears on titlebar when plugin Breadcrumb NavXT is active', 'i-amaze' ),
 			),
 			
 			// 3rd part slider
@@ -100,70 +101,176 @@ function iamaze_register_meta_boxes( $meta_boxes )
 		)
 	);
 	
-	
-	/**/
-	
+
 	$meta_boxes[] = array(
 		// Meta box id, UNIQUE per meta box. Optional since 4.1.5
-		'id' => 'portfoliometa',
+		'id' => 'miscellaneous',
 
 		// Meta box title - Will appear at the drag and drop handle bar. Required.
-		'title' => __( 'Portfolio Meta', 'i-amaze' ),
+		'title' => __( 'Other Page Settings', 'i-amaze' ),
 
 		// Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
-		'pages' => array( 'portfolio' ),
+		'pages' => array( 'post', 'page', 'portfolio', 'team', 'product' ),
 
 		// Where the meta box appear: normal (default), advanced, side. Optional.
 		'context' => 'normal',
 
 		// Order of meta box: high (default), low. Optional.
-		'priority' => 'high',
+		'priority' => 'low',
 
 		// Auto save: true, false (default). Optional.
 		'autosave' => true,
 
 		// List of meta fields
 		'fields' => array(
-			// Side bar
-
-			// ITEM DETAILS OPTIONS SECTION
+			
+			// Show Alternate main navigation
 			array(
-				'type' => 'heading',
-				'name' => __( 'Portfolio Additinal Details', 'i-amaze' ),
-				'id'   => 'fake_id_pf1', // Not used but needed for plugin
+				'name' => __( 'Show Alternate Main Navigation', 'i-amaze' ),
+				'id'   => "{$prefix}alt_navigation",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('Turn on the alternate main navigation', 'i-amaze'),
 			),
-			// Slide duration
+			/**/
+			
+			// Remove top and bottom page padding/margin
 			array(
-				'name'  => __( 'Subtitle', 'i-amaze' ),
-				'id'    => "{$prefix}portfolio_subtitle",
-				'desc'  => __( 'Enter a subtitle for use within the portfolio item index (optional).', 'i-amaze' ),				
+				'name' => __( 'Remove Top and Bottom Padding/Margin', 'i-amaze' ),
+				'id'   => "{$prefix}page_nopad",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('Remove the spaces/padding from top and bottom of the page/post', 'i-amaze'),
+			),
+			
+			// Hide page header
+			array(
+				'name' => __( 'Show Transparent Header', 'i-amaze' ),
+				'id'   => "{$prefix}trans_header",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('Show transparent header on pages/posts. This will hide the page/post titlebar as well', 'i-amaze'),
+			),	
+			
+			// Hide page header
+			array(
+				'name' => __( 'Hide Page Header', 'i-amaze' ),
+				'id'   => "{$prefix}no_page_header",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('In case you are building the page without the top navigation and logo', 'i-amaze'),
+			),						
+		
+			// Hide Topbar
+			array(
+				'name' => __( 'Hide Top Utilitybar', 'i-amaze' ),
+				'id'   => "{$prefix}no_ubar",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('Hide top bar with email and social links', 'i-amaze'),
+			),
+			// Hide page header
+			array(
+				'name' => __( 'Hide Footer Widget Area', 'i-amaze' ),
+				'id'   => "{$prefix}no_footer",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('Hide bottom footer widget area', 'i-amaze'),
+			),						
+			
+			// additional page class			
+			array(
+				'name'  => __( 'Custom Page Logo Normal', 'i-amaze' ),
+				'id'    => "{$prefix}page_logo_normal",
+				'type'  => 'single_image',
+			),
+			// additional page class			
+			array(
+				'name'  => __( 'Custom Page Logo Reverse', 'i-amaze' ),
+				'id'    => "{$prefix}page_logo_trans",
+				'type'  => 'single_image',
+			),
+			
+			// Custom page primary color			
+			array(
+				'name'  => __( 'Custom Primary Color', 'i-amaze' ),
+				'id'    => "{$prefix}page_color",
+				'type'  => 'color',
+				'std'   => '',
+				'desc' => __('Choose a custom primary color for this page', 'i-amaze'),
+			),	
+						
+			// additional page class			
+			array(
+				'name'  => __( 'Additional Page Class', 'i-amaze' ),
+				'id'    => "{$prefix}page_class",
 				'type'  => 'text',
+				'std'   => __( '', 'i-amaze' ),
+				'desc' => __('Enter an additional page class, will be added to body. "hide-page-header" for no header, "boxed" for boxed page for wide layout.', 'i-amaze'),
+			),
+			
+			// Remove top and bottom page padding/margin
+			array(
+				'name' => __( 'Disable "wpautop filter" filter', 'i-amaze' ),
+				'id'   => "{$prefix}page_wpautop",
+				'type' => 'switch',
+				// Value can be 0 or 1
+				'std'  => 0,
+				'desc' => __('For developers use.', 'i-amaze'),
 			),
 			
 			array(
-				'name'  => __( 'Portfolio Link(External)', 'i-amaze' ),
-				'id'    => "{$prefix}portfolio_url",
-				'desc'  => __( 'Enter an external link for the item (optional) (NOTE: INCLUDE HTTP://).', 'i-amaze' ),				
-				'type'  => 'text',
-			),
-
+				'name'            => 'SmartSlider 3',
+				'id'              => "{$prefix}smart_slider",
+				'type'            => 'select',
+				// Array of 'value' => 'Label' pairs
+				'options'         => nx_smartslider_list (),
+				// Allow to select multiple value?
+				'multiple'        => false,
+				// Placeholder text
+				'placeholder'     => 'Select an Item',
+				// Display "Select All / None" button?
+				'select_all_none' => true,
+			),															
+						
 		)
-	);		
+	);			
 	
 	return $meta_boxes;
 }
 
-	function iamaze_get_category_list_key_array($category_name) {
+function iamaze_get_category_list_key_array($category_name) {
 			
-		$get_category = get_categories( array( 'taxonomy' => $category_name	));
-		$category_list = array( 'all' => __( 'Select Category', 'i-amaze' ));
+	$get_category = get_categories( array( 'taxonomy' => $category_name	));
+	$category_list = array( 'all' => __( 'Select Category', 'i-amaze' ));
 		
-		foreach( $get_category as $category ){
-			if (isset($category->slug)) {
-			$category_list[$category->slug] = $category->cat_name;
+	foreach( $get_category as $category ){
+		if (isset($category->slug)) {
+		$category_list[$category->slug] = $category->cat_name;
+		}
+	}
+	return $category_list;
+}
+
+function nx_smartslider_list () {
+	
+	global $wpdb;
+	$smartslider = array();
+	if(class_exists('SmartSlider3')) {
+		$get_sliders = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'nextend2_smartslider3_sliders');
+		if($get_sliders) {
+			foreach($get_sliders as $slider) {
+				$smartslider[$slider->id] = $slider->title;
 			}
 		}
-			
-		return $category_list;
-	}	
+	}
+	return $smartslider;
+
+}	
 

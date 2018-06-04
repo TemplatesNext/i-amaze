@@ -69,8 +69,7 @@ function iamaze_header_styles() {
 				display: none!important;
 			}
 			@media (max-width: 1069px) {
-				.menu-toggle,.topsearch,
-				#navbar {
+				.menu-toggle,.topsearch,#navbar {
 					display: none!important;
 				}				
 			}

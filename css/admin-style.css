@@ -137,7 +137,46 @@ li.customize-control {
 	color: #fff;
 }
 
-	
-	
-	
-	
+
+#customize-control-logo-trans {
+	background-image: url("../images/logo-bg.png");
+	background-position: center;
+	background-size: cover;
+}
+
+.tx-rednotice {
+	display: block;
+	border: 1px solid #06C;
+	padding: 12px;
+	margin: 6px 0px 24px 0px;
+	background-color: #CEE7FF;
+}
+
+.tx-layout-link,
+.tx-layout-link:visited {
+	display: block;
+	width: 100%;
+	text-align: center;
+	background-color: #dd3333;
+	color: #FFFFFF;
+	font-weight: 600;
+	text-decoration: none;
+	padding: 12px 12px;
+	margin-top: 12px;
+}
+
+.tx-layout-link:hover {
+	background-color: #373737;
+	color: #FFFFFF;
+}
+
+.promo-box .txo-red {
+	font-weight: 500;
+	color: #C00;
+	padding: 4px 12px;
+}
+
+.promo-box .txo-red a,
+.promo-box .txo-red a:visited {
+	color: #C00;	
+}

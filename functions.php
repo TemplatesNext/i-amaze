@@ -80,6 +80,7 @@ function iamaze_setup() {
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menu( 'primary', esc_attr__( 'Navigation Menu', 'i-amaze' ) );
+	register_nav_menu( 'alt-primary', esc_attr__( 'Alternate Navigation Menu', 'i-amaze' ) );	
 	
 	// add title tag support since WordPress 4.1 
 	add_theme_support( 'title-tag' );		
@@ -95,7 +96,7 @@ function iamaze_setup() {
 	 * additional Image sizes.
 	 */
 	//add_image_size( 'iamaze-slider-thumb', 1920, 1080, true ); //(cropped)	
-	add_image_size( 'iamaze-slider-thumb', 1280, 720, true ); //(cropped)	
+	add_image_size( 'iamaze-slider-thumb', 1600, 900, true ); //(cropped)	
 	add_image_size( 'iamaze-single-thumb', 1200, 480, true ); //(cropped)
 	
 	// Add Support for woocommerce
@@ -482,6 +483,24 @@ function iamaze_get_link_url() {
  * @return array The filtered body class list.
  */
 function iamaze_body_class( $classes ) {
+
+	
+	global $post;
+	
+	$iamaze_page_class = '';
+	$iamaze_page_nopad = 0;	
+	$show_trans_header = '';
+	$header_type = '';
+	$no_ubar = '';
+	  
+	if ( function_exists( 'rwmb_meta' ) ) { 
+		$iamaze_page_class = rwmb_meta('iamaze_page_class');
+		$iamaze_page_nopad = rwmb_meta('iamaze_page_nopad');
+		$show_trans_header = rwmb_meta('iamaze_trans_header');
+		$header_type = rwmb_meta('iamaze_header_type');
+		$no_ubar = rwmb_meta('iamaze_no_ubar');		
+	}
+		
 	if ( ! is_multi_author() )
 		$classes[] = 'single-author';
 
@@ -516,10 +535,56 @@ function iamaze_body_class( $classes ) {
 	}
 	
 	// Add PreLoader Class
-	if( get_theme_mod('pre_loader', 0) == 1 )
+	if( get_theme_mod('pre_loader', 1) == 1 )
 	{
 		$classes[] = 'nx-preloader';
 	}
+	
+	if( get_theme_mod('trans_header', 1) == 0 )
+	{
+		$classes[] = 'opaque-header';
+	}
+	
+	if( get_theme_mod('uppercase_nav', 0) == 1 )
+	{
+		$classes[] = 'nav-uppercase';
+	}	
+	
+	if( ! empty($iamaze_page_class) )
+		$classes[] = esc_attr($iamaze_page_class);
+	
+	if( $iamaze_page_nopad == 1 )
+		$classes[] = 'tx-nopad';
+		
+	if ( is_page_template( 'page_pb.php' ) ) {
+		$classes[] = 'nx-pb';
+	}	
+		
+	if ( is_page_template( 'page_elementor.php' ) ) {
+		$classes[] = 'nx-full-width nx-elementor';
+	}	
+		
+	if ( is_page_template( 'page_brizy.php' ) ) {
+		$classes[] = 'nx-full-width nx-brizy';
+	}
+		
+	if ( is_page_template( 'page_full-width.php' ) ) {
+		$classes[] = 'nx-full-width';
+	}
+	
+	if( $show_trans_header == 1 )
+	{
+		$classes[] = 'nx-fullscreen';
+	}
+	
+	if( $header_type == '2' )
+	{
+		$classes[] = 'nx-vi-header';
+	}
+	
+	if ( $no_ubar == 1 ) {
+		$classes[] = 'no-ubar';
+	}					
 	
 	return $classes;
 }
@@ -569,8 +634,12 @@ function iamaze_customize_register( $wp_customize ) {
 	$wp_customize->selective_refresh->add_partial( 'social-icons', array(
 		'selector' => '.socialicons',
 		'settings' => array( 'itrans_social_facebook' ),
-		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
-	) );	
+	) );
+	
+	$wp_customize->selective_refresh->add_partial( 'tagline', array(
+		'selector' => '.vtitle-tagline',
+		'settings' => array( 'blogdescription' ),
+	) );		
 	
 }
 add_action( 'customize_register', 'iamaze_customize_register' );
@@ -614,6 +683,8 @@ if ( function_exists( 'rwmb_meta' ) ) {
 include get_template_directory() . '/inc/custom_functions.php';
 
 include get_template_directory() . '/inc/nx-custom-style.php';
+
+include get_template_directory() . '/inc/woo-functions.php';
 
 /*-----------------------------------------------------------------------------------*/
 /*	changing default Excerpt length 
@@ -709,16 +780,34 @@ function iamaze_register_required_plugins() {
 
          // This is an example of how to include a plugin from a private repo in your theme.
         array(
-            'name' => 'Breadcrumb NavXT', // The plugin name.
-            'slug' => 'breadcrumb-navxt', // The plugin slug (typically the folder name).
+            'name' => 'TemplatesNext OnePager', // The plugin name.
+            'slug' => 'templatesnext-onepager', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),
+        // This is an example of how to include a plugin from a private repo in your theme.
+        array(
+            'name' => 'Brizy – Page Builder', // The plugin name.
+            'slug' => 'brizy', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),
+		         // This is an example of how to include a plugin from a private repo in your theme.
+        array(
+            'name' => 'Smart Slider 3', // The plugin name.
+            'slug' => 'smart-slider-3', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),				
+         // This is an example of how to include a plugin from a private repo in your theme.
+        array(
+            'name' => 'One Click Demo Import', // The plugin name.
+            'slug' => 'one-click-demo-import', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
         ),
          // This is an example of how to include a plugin from a private repo in your theme.
         array(
-            'name' => 'TemplatesNext OnePager', // The plugin name.
-            'slug' => 'templatesnext-onepager', // The plugin slug (typically the folder name).
+            'name' => 'Breadcrumb NavXT', // The plugin name.
+            'slug' => 'breadcrumb-navxt', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
-        )		
+        ),		
 
     );
 

@@ -1,127 +1,106 @@
 <?php
 /**
  * Plugin Name:   Kirki Toolkit
- * Plugin URI:    http://kirki.org
+ * Plugin URI:    http://aristath.github.io/kirki
  * Description:   The ultimate WordPress Customizer Toolkit
  * Author:        Aristeides Stathopoulos
- * Author URI:    http://aristeides.com
- * Version:       1.0.2
+ * Author URI:    http://aristath.github.io
+ * Version:       3.0.25
  * Text Domain:   kirki
  *
+ * GitHub Plugin URI: aristath/kirki
+ * GitHub Plugin URI: https://github.com/aristath/kirki
  *
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
  * @since       1.0
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Set the KIRKI_PATH constant.
-if ( ! defined( 'KIRKI_PATH' ) ) {
-	define( 'KIRKI_PATH', dirname( __FILE__ ) );
-}
-// Set the KIRKI_URL constant.
-if ( ! defined( 'KIRKI_URL' ) ) {
-	define( 'KIRKI_URL', plugin_dir_url( __FILE__ ) );
+// No need to proceed if Kirki already exists.
+if ( class_exists( 'Kirki' ) ) {
+	return;
 }
 
-if ( ! function_exists( 'kirki_autoload_classes' ) ) {
-	/**
-	 * The Kirki class autoloader.
-	 * Finds the path to a class that we're requiring and includes the file.
-	 */
-	function kirki_autoload_classes( $class_name ) {
+// Include the autoloader.
+require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'class-kirki-autoload.php';
+new Kirki_Autoload();
 
-		if ( 0 === stripos( $class_name, 'Kirki' ) ) {
+if ( ! defined( 'KIRKI_PLUGIN_FILE' ) ) {
+	define( 'KIRKI_PLUGIN_FILE', __FILE__ );
+}
 
-			$foldername = ( 0 === stripos( $class_name, 'Kirki_Controls_' ) ) ? 'controls'.DIRECTORY_SEPARATOR.strtolower( str_replace( '_', '-', str_replace( '_Control', '', str_replace( 'Kirki_Controls_', '', $class_name ) ) ) ) : '';
-			$foldername = ( '' != $foldername ) ? $foldername.DIRECTORY_SEPARATOR : '';
-
-			$class_path = KIRKI_PATH.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.$foldername.'class-'.strtolower( str_replace( '_', '-', $class_name ) ).'.php';
-			if ( file_exists( $class_path ) ) {
-				include $class_path;
-			}
-
-		}
-
+// Define the KIRKI_VERSION constant.
+if ( ! defined( 'KIRKI_VERSION' ) ) {
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
-	// Run the autoloader
-	spl_autoload_register( 'kirki_autoload_classes' );
+	$data    = get_plugin_data( KIRKI_PLUGIN_FILE );
+	$version = ( isset( $data['Version'] ) ) ? $data['Version'] : false;
+	define( 'KIRKI_VERSION', $version );
 }
 
-// Include helper files
-include_once( KIRKI_PATH.'/includes/functions.php' );
-include_once( KIRKI_PATH.'/includes/deprecated.php' );
-// Include the API class
-include_once( KIRKI_PATH.'/includes/class-kirki.php' );
+// Make sure the path is properly set.
+Kirki::$path = wp_normalize_path( dirname( __FILE__ ) );
+Kirki_Init::set_url();
+
+new Kirki_Controls();
 
 if ( ! function_exists( 'Kirki' ) ) {
 	/**
-	 * Returns the Kirki object
+	 * Returns an instance of the Kirki object.
 	 */
-	function Kirki() {
-		// Make sure the class is instanciated
+	function kirki() {
 		$kirki = Kirki_Toolkit::get_instance();
-
-		$kirki->font_registry = new Kirki_Fonts_Font_Registry();
-		$kirki->api           = new Kirki();
-		$kirki->scripts       = new Kirki_Scripts_Registry();
-		$kirki->styles        = array(
-			'back'  => new Kirki_Styles_Customizer(),
-			'front' => new Kirki_Styles_Frontend(),
-		);
-
 		return $kirki;
-
 	}
-
-	global $kirki;
-	$kirki = Kirki();
 }
 
-if ( defined( 'KIRKI_REDUX_COMPATIBILITY' ) && KIRKI_REDUX_COMPATIBILITY ) {
-	include_once( KIRKI_PATH.'/includes/redux-compatibility.php' );
-}
+// Start Kirki.
+global $kirki;
+$kirki = kirki();
 
-if ( ! function_exists( 'kirki_load_textdomain' ) ) {
-	/**
-	 * Load plugin textdomain.
-	 *
-	 * @since 0.8.0
-	 */
-	function kirki_load_textdomain() {
-		$textdomain = 'kirki';
+// Instantiate the modules.
+$kirki->modules = new Kirki_Modules();
 
-		// Look for WP_LANG_DIR/{$domain}-{$locale}.mo
-		if ( file_exists( WP_LANG_DIR.'/'.$textdomain.'-'.get_locale().'.mo' ) ) {
-			$file = WP_LANG_DIR.'/'.$textdomain.'-'.get_locale().'.mo';
-		}
-		// Look for KIRKI_PATH/languages/{$domain}-{$locale}.mo
-		if ( ! isset( $file ) && file_exists( KIRKI_PATH.'/languages/'.$textdomain.'-'.get_locale().'.mo' ) ) {
-			$file = KIRKI_PATH.'/languages/'.$textdomain.'-'.get_locale().'.mo';
-		}
+Kirki::$url = plugins_url( '', __FILE__ );
 
-		if ( isset( $file ) ) {
-			load_textdomain( $textdomain, $file );
-		}
+// Instantiate classes.
+new Kirki();
+new Kirki_L10n();
 
-		load_plugin_textdomain( $textdomain, false, KIRKI_PATH.'/languages' );
-	}
-	add_action( 'plugins_loaded', 'kirki_load_textdomain' );
-}
+// Include deprecated functions & methods.
+require_once wp_normalize_path( dirname( __FILE__ ) . '/deprecated/deprecated.php' );
 
-// Add an empty config for global fields
+// Include the ariColor library.
+require_once wp_normalize_path( dirname( __FILE__ ) . '/lib/class-aricolor.php' );
+
+// Add an empty config for global fields.
 Kirki::add_config( '' );
 
+$custom_config_path = dirname( __FILE__ ) . '/custom-config.php';
+$custom_config_path = wp_normalize_path( $custom_config_path );
+if ( file_exists( $custom_config_path ) ) {
+	require_once $custom_config_path;
+}
+
+// Add upgrade notifications.
+require_once wp_normalize_path( dirname( __FILE__ ) . '/upgrade-notifications.php' );
+
 /**
- * The 2 following commented-out lines are for testing purposes.
- * You can uncomment whichever you want and fields will flood the customizer.
+ * To enable tests, add this line to your wp-config.php file (or anywhere alse):
+ * define( 'KIRKI_TEST', true );
+ *
+ * Please note that the example.php file is not included in the wordpress.org distribution
+ * and will only be included in dev versions of the plugin in the github repository.
  */
- 	//include_once( KIRKI_PATH . '/sample-config.php' );
-	// include_once( KIRKI_PATH . '/tests/kirki-user-tests.php' );
+if ( defined( 'KIRKI_TEST' ) && true === KIRKI_TEST && file_exists( dirname( __FILE__ ) . '/example.php' ) ) {
+	include_once dirname( __FILE__ ) . '/example.php';
+}

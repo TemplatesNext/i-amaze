@@ -18,16 +18,70 @@
 		function iamaze_custom_styles() {
 			
 			global  $iamaze_data;
+			$custom_css = "";
 			$body_font_size = "13";
 			$body_line_height = "24";
 			$menu_font_size = "13";
 			$primary_color = "#e57e26";
+			
+			
+			$tx_body_font = array();
+			$tx_title_font = array();
+			$tx_body_style = '';
+			$tx_title_style = '';
+			$tx_body_font['font-family'] = '"Open Sans", Helvetica, sans-serif';
+			$tx_body_font['font-size'] = '14px';
+			$tx_body_font['line-height']= 1.8;
+			$tx_body_font['color'] = '#575757';
+			$tx_body_font['variant'] = 400;
+			
+			$tx_title_font['font-family'] = 'Roboto, Georgia, serif';			
 
 			$primary_color = esc_attr(get_theme_mod('primary_color', '#e57e26'));
 
-			
 
+			global $post;	
+			$custom_page_color = '';
+			
+			if ( function_exists( 'rwmb_meta' ) ) {
+				$custom_page_color = rwmb_meta('iamaze_page_color', '');			
+				if( !empty($custom_page_color) )
+				{
+					$primary_color = $custom_page_color;
+				}				
+			}
+
+			
+			$tx_body_font = get_theme_mod( 'body_font', $tx_body_font );
+			$tx_title_font = get_theme_mod( 'title_font', $tx_title_font );
+			
+			if ( isset( $tx_body_font['font-family'] ) ) {
+				$tx_body_style .= 'font-family: '.$tx_body_font['font-family'].'; ';
+			}
+			if ( isset( $tx_body_font['font-size'] ) ) {
+				$tx_body_style .= 'font-size: '.$tx_body_font['font-size'].'px; ';
+			}
+			if ( isset( $tx_body_font['line-height'] ) ) {
+				$tx_body_style .= 'line-height: '.$tx_body_font['line-height'].'; ';
+			}
+			/*
+			if ( isset( $tx_body_font['color'] ) ) {
+				$tx_body_style .= 'color: '.$tx_body_font['color'].';';
+			}
+			
+			if ( isset( $tx_body_font['variant'] ) ) {
+				$tx_body_style .= 'font-weight: '.$tx_body_font['variant'].';';
+			}
+			*/
+			
+			if ( isset( $tx_title_font['font-family'] ) ) {
+				$tx_title_style .= 'font-family: '.$tx_title_font['font-family'].'; ';
+			}	
+			
 			echo '<style type="text/css">'. "\n";
+			
+			echo 'body {'.$tx_body_style.'}';
+			echo 'h1,h2,h3,h4,h5,h6,.comment-reply-title,.widget .widget-title, .entry-header h1.entry-title {'.$tx_title_style.'}';				
 			
 			echo '.themecolor {color: '.$primary_color.';}';
 			echo '.themebgcolor {background-color: '.$primary_color.';}';
@@ -65,29 +119,29 @@
 
 			echo '.format-gallery .entry-content .page-links a:hover,.format-audio .entry-content .page-links a:hover,.format-status .entry-content .page-links a:hover,.format-video .entry-content .page-links a:hover,.format-chat .entry-content .page-links a:hover,.format-quote .entry-content .page-links a:hover,.page-links a:hover {color: '.$primary_color.';}';
 
-			echo '.iheader.front, .nx-preloader .nx-ispload {background-color: '.$primary_color.';}';
+			echo '.iheader.front, .nx-preloader .nx-ispload, .woocommerce ul.products li.product .button, .product .summary.entry-summary > form.cart > button {background-color: '.$primary_color.';}';
 
 			echo '.navigation a,.tx-post-row .tx-folio-title a:hover,.tx-blog .tx-blog-item h3.tx-post-title a:hover {color: '.$primary_color.';}';
 
-			echo '.paging-navigation div.navigation > ul > li a:hover,.paging-navigation div.navigation > ul > li.active > a {color: '.$primary_color.';	border-color: '.$primary_color.';}';
+			echo '.paging-navigation div.navigation > ul > li a:hover,.paging-navigation div.navigation > ul > li.active > a {color: '.$primary_color.'; border-color: '.$primary_color.';}';
 
 			echo '.comment-author .fn,.comment-author .url,.comment-reply-link,.comment-reply-login,.comment-body .reply a,.widget a:hover {color: '.$primary_color.';}';
 
-			echo '.widget_calendar a:hover, nav.navigation .nav-links a:hover {background-color: '.$primary_color.';	color: #ffffff;	}';
+			echo '.widget_calendar a:hover, nav.navigation .nav-links a:hover {background-color: '.$primary_color.'; color: #ffffff;	}';
 
 			echo '.widget_calendar td#next a:hover,.widget_calendar td#prev a:hover {background-color: '.$primary_color.';color: #ffffff;}';
 
 			echo '.site-footer div.widget-area .widget a:hover, .nx-fullscreen .site-header:not(.fixeddiv) .nav-container .nav-menu > li > a:hover {color: '.$primary_color.';}';
 
-			echo '.site-main div.widget-area .widget_calendar a:hover,.site-footer div.widget-area .widget_calendar a:hover {	background-color: '.$primary_color.';color: #ffffff;}';
+			echo '.site-main div.widget-area .widget_calendar a:hover,.site-footer div.widget-area .widget_calendar a:hover { background-color: '.$primary_color.';color: #ffffff;}';
 						
 			echo '.widget a:visited { color: #373737;}';
 
 			echo '.widget a:hover,.entry-header h1.entry-title a:hover,.error404 .page-title:before,.tx-post-comm:after {color: '.$primary_color.';}';
 
-			echo '.da-dots > span > span {background-color: '.$primary_color.';}';
+			echo '.da-dots > span > span, a.txobutton, a.txobutton:visited {background-color: '.$primary_color.';}';
 
-			echo '.iheader,.format-status {background-color: '.$primary_color.';}';
+			echo '.iheader,.format-status, h3.txo-subtitle:after {background-color: '.$primary_color.';}';
 			
 			echo '.tx-cta {border-left: 6px solid '.$primary_color.';}';
 			
@@ -95,7 +149,7 @@
 			
 			echo '.entry-title a { color: #141412;}';
 			
-			echo '.nav-container ul.nav-menu > li > ul a:hover { background-color:'.$primary_color.'; color: #FFF; }';
+			echo '.nav-container ul.nav-menu > li > ul a:hover, .woocommerce span.onsale { background-color:'.$primary_color.'; color: #FFF; }';
 			
 			echo '.site-footer .widget-area .widget input[type="submit"],.site .tx-slider .tx-slide-button a,.ibanner .da-slider .owl-item.active .da-link  { background-color: '.$primary_color.'; color: #FFF; }';
 			echo '.site-footer .widget-area .widget input[type="submit"]:hover,.site .tx-slider .tx-slide-button a:hover  { background-color: #373737; color: #FFF; }';
@@ -108,7 +162,7 @@
 			
 			echo '.tx-service:hover .tx-service-icon span {background-color: #FFF; color:'.$primary_color.'; border: 4px solid '.$primary_color.';}';
 			
-			echo '.tx-service:hover .tx-service-icon span i {color: '.$primary_color.';}';
+			echo '.tx-service:hover .tx-service-icon span i, .nx-fullscreen .site-header .header-iconwrap .header-icons.woocart > a:hover {color: '.$primary_color.';}';
 			
 			echo '.ibanner .da-slider .owl-controls .owl-page span { border-color:'.$primary_color.'; }';	
 			echo '.ibanner .da-slider .owl-controls .owl-page.active span, .ibanner .da-slider .owl-controls.clickable .owl-page:hover span {  background-color: '.$primary_color.'; }';
@@ -119,6 +173,10 @@
 			
 			echo '.colored-drop .nav-container ul ul a, .colored-drop ul.nav-container ul a, .colored-drop ul.nav-container ul, .colored-drop .nav-container ul ul {background-color: '.$primary_color.';}';
 			echo '.pagination .nav-links > span:hover, .pagination .nav-links > a:hover, .pagination .nav-links > span.current, .pagination .nav-links > a.current { color: '.$primary_color.'; border-color: '.$primary_color.'; }';			
+			
+			echo 'a.txoibutton, a.txoibutton:visited, .header-icons.woocart .cartdrop.widget_shopping_cart.nx-animate { border-color:'.$primary_color.'; }';
+			
+			echo '.header-iconwrap .header-icons.woocart > a .cart-counts {background-color:'.$primary_color.';}';
 		
 			
 			echo "\n".'/* =============== user styling =============== */'."\n";

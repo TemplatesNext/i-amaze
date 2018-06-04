@@ -7,16 +7,22 @@
  * @package i-amaze
  * @since i-amaze 1.0
  */
+$no_footer = "";
+if ( function_exists( 'rwmb_meta' ) ) {
+	$no_footer = rwmb_meta('iamaze_no_footer');
+}  
 ?>
 
 		</div><!-- #main -->
         <div class="tx-footer-filler"></div>
 		<footer id="colophon" class="site-footer" role="contentinfo">
+        	<?php if( $no_footer != 1 ) : ?>
         	<div class="footer-bg clearfix">
                 <div class="widget-wrap">
                     <?php get_sidebar( 'main' ); ?>
                 </div>
 			</div>
+            <?php endif; ?>
 			<div class="site-info">
                 <div class="copyright">
                 	<?php esc_html_e( 'Copyright &copy;', 'i-amaze' ); ?>  <?php bloginfo( 'name' ); ?>

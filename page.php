@@ -36,7 +36,15 @@ get_header(); ?>
                     <?php endif; ?>
 
 					<div class="entry-content">
-						<?php the_content(); ?>
+                        <?php 
+							if ( function_exists( 'rwmb_meta' ) ) {
+								if( rwmb_meta('iamaze_page_wpautop') == 1 )
+								{
+									remove_filter('the_content', 'wpautop'); 
+								}
+							}
+						?>
+                        <?php the_content(); ?>
 						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . esc_attr__( 'Pages:', 'i-amaze' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
 					</div><!-- .entry-content -->
 

@@ -28,6 +28,30 @@ $tx_plugins = array (
 			'slug' => 'breadcrumb-navxt',
 			'pluginfile' => 'breadcrumb-navxt.php',			
     ),
+	array(
+            'name' => __( 'One Click Demo Import (<span class="nx-red">Optional</span>)', 'i-amaze' ),
+            'desc' => __( 'This plugin is only required if you choose to import the demo layouts/contents, Once you are done with your demo setup you can deactivate this plugin.', 'i-amaze' ),
+			'pluginurl' => esc_url( 'https://wordpress.org/plugins/one-click-demo-import/' ),
+			'title' => 'One Click Demo Import',			
+			'slug' => 'one-click-demo-import',
+			'pluginfile' => 'one-click-demo-import.php',	
+    ),	
+	array(
+            'name' => __( 'Brizy (<span class="nx-red">Optional</span>)', 'i-amaze' ),
+            'desc' => __( 'A page builder with awesome UI and pre-built sections.', 'i-amaze' ),
+			'pluginurl' => esc_url( 'https://wordpress.org/plugins/brizy/' ),
+			'title' => 'Brizy – Page Builder',			
+			'slug' => 'brizy',
+			'pluginfile' => 'brizy.php',	
+    ),
+	array(
+            'name' => __( 'Smart Slider 3 (<span class="nx-red">Optional</span>)', 'i-amaze' ),
+            'desc' => __( 'Probably the #1 FREE slider available with pre-built slider, I-AMAZE is well integrated with it.', 'i-amaze' ),
+			'pluginurl' => esc_url( 'https://wordpress.org/plugins/smart-slider-3/' ),
+			'title' => 'Smart Slider 3',			
+			'slug' => 'smart-slider-3',
+			'pluginfile' => 'smart-slider-3.php',	
+    ),			
 );
 
 $tx_faqs = array (
@@ -39,5 +63,4 @@ $tx_faqs = array (
             'question' => __( 'I activated my new theme and it doesn’t look like the demo. What’s up with this?', 'i-amaze' ),
             'answeer' => __( 'By default the Wordpress comes with only one sample post and a page. Once you activate a theme, it requres little bit of setup, like logo, color, social links, etc.', 'i-amaze' ),
     ),
-
 );

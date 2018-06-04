@@ -10,22 +10,41 @@
 $top_phone = '';
 $top_email = '';
 $video_id = '';
+$alt_navigation = 0;
 
-$top_phone = esc_attr(get_theme_mod('top_phone', ''));
-$top_email = sanitize_email(get_theme_mod('top_email', ''));
+$top_phone = esc_attr(get_theme_mod('top_phone', '1-000-123-4567'));
+$top_email = sanitize_email(get_theme_mod('top_email', 'email@example.com'));
 $show_search = get_theme_mod('show_search', 1);
+$alt_front_nav = get_theme_mod('alt_menu', 0);
 
 $iamaze_logo_trans = get_theme_mod( 'logo-trans', '' );
 $custom_logo_id = get_theme_mod( 'custom_logo' );
 $custom_logo_image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 $custom_logo_image = $custom_logo_image[0];
 
+global $post;
+
+$no_page_header = 0;
+if ( function_exists( 'rwmb_meta' ) ) {
+	if(rwmb_meta( 'iamaze_page_logo_normal' ))
+	{
+		$custom_logo_normal = rwmb_meta( 'iamaze_page_logo_normal', '' );
+		$custom_logo_image = $custom_logo_normal['full_url'];
+	}
+	if(rwmb_meta( 'iamaze_page_logo_trans' ))
+		{
+		$custom_logo_reverse = rwmb_meta( 'iamaze_page_logo_trans', '' );
+		$iamaze_logo_trans = $custom_logo_reverse['full_url'];
+	}
+	
+	$alt_navigation = rwmb_meta('iamaze_alt_navigation');
+	$no_page_header = rwmb_meta('iamaze_no_page_header');
+}
+
 if(has_header_video())
 {
 	$video_id = iamaze_get_video_id(esc_url(get_header_video_url()));
 }
-
-global $post; 
 
 ?>
 <!DOCTYPE html>
@@ -38,7 +57,7 @@ global $post;
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> style="">
-	<?php if( get_theme_mod('pre_loader', 0) == 1 ) { ?>	
+	<?php if( get_theme_mod('pre_loader', 1) == 1 ) { ?>	
 	<div class="nx-ispload">
         <div class="nx-ispload-wrap">
             <div class="spinner">
@@ -75,6 +94,7 @@ global $post;
         </div>
         <?php endif; ?>
         
+        <?php if ( $no_page_header == 0 ) : ?>
         <div class="headerwrap">
             <header id="masthead" class="site-header" role="banner">
          		<div class="headerinnerwrap">
@@ -112,16 +132,43 @@ global $post;
                             <h3 class="menu-toggle"><?php esc_attr_e( 'Menu', 'i-amaze' ); ?></h3>
                             <a class="screen-reader-text skip-link" href="#content" title="<?php esc_attr_e( 'Skip to content', 'i-amaze' ); ?>"><?php esc_attr_e( 'Skip to content', 'i-amaze' ); ?></a>
                             <?php 
-								if ( has_nav_menu(  'primary' ) ) {
+								if( $alt_navigation == 1 || ( is_front_page() && $alt_front_nav == 1 ) ) {
+									if ( has_nav_menu(  'alt-primary' ) ) {
+										wp_nav_menu( array( 'theme_location' => 'alt-primary', 'menu_class' => 'nav-menu', 'container_class' => 'nav-container', 'container' => 'div' ) );
+									} else
+									{
+										wp_nav_menu( array( 'theme_location' => 'alt-primary', 'menu_class' => 'nav-container' ) ); 
+									}									
+								} else {
+									if ( has_nav_menu(  'primary' ) ) {
 										wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container_class' => 'nav-container', 'container' => 'div' ) );
-									}
-									else
+									} else
 									{
 										wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-container' ) ); 
 									}
-								?>
-							
+								}
+							?>							
                         </nav><!-- #site-navigation -->
+
+                        <?php
+                        global $woocommerce;
+						$show_cart = get_theme_mod('show_cart', 0);
+                        if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && $show_cart == 1 ) {
+                        ?>
+                        <div class="header-iconwrap">
+                            <div class="header-icons woocart">
+                                <a href="<?php echo wc_get_cart_url(); ?>" >
+                                    <span class="show-sidr"><?php _e('Cart','i-amaze'); ?></span>
+                                    <span class="genericon genericon-cart"></span>
+                                    <span class="cart-counts"><?php echo sprintf($woocommerce->cart->cart_contents_count); ?></span>
+                                </a>
+                                <?php echo iamaze_top_cart(); ?>
+                            </div>
+                        </div>     
+                        <?php	
+                        }
+                        ?>
+                                                
                         <?php if( $show_search == 1 ) { ?>
                         <div class="topsearch">
                             <?php get_search_form(); ?>
@@ -132,19 +179,21 @@ global $post;
                 </div>
             </header><!-- #masthead -->
         </div>
+        <?php endif; ?>
         
         <!-- #Banner -->
         <?php
 		
-		$hide_title = $show_slider = $other_slider = $custom_title = $hide_breadcrumb = $image_header_overlay = $overlay_class = "";
+		$hide_title = $header_type = $other_slider = $custom_title = $hide_breadcrumb = $image_header_overlay = $overlay_class = $smart_slider_3 = "";
 		if ( function_exists( 'rwmb_meta' ) ) {
 			$hide_title = rwmb_meta('iamaze_hidetitle');
-			$show_slider = rwmb_meta('iamaze_show_slider');
+			$header_type = rwmb_meta('iamaze_header_type');
 			$other_slider = rwmb_meta('iamaze_other_slider');
 			$custom_title = rwmb_meta('iamaze_customtitle');
 			$hide_breadcrumb = rwmb_meta('iamaze_hide_breadcrumb');
+			$smart_slider_3 = rwmb_meta('iamaze_smart_slider');	
 		}
-		
+
 		$hide_front_slider = get_theme_mod('slider_stat', 0);
 		$other_front_slider = get_theme_mod('blogslide_scode', '');
 		$itrans_slogan = esc_attr(get_theme_mod('banner_text', get_bloginfo( 'description' )));
@@ -155,29 +204,32 @@ global $post;
 		$other_slider = esc_html($other_slider);
 		$other_front_slider = esc_html($other_front_slider);
 		
-		if( $image_header_overlay == 1 )
-		{
+		if( $image_header_overlay == 1 ) {
 			$overlay_class = "chekered";
-		} else
-		{
+		} else 	{
 			$overlay_class = "no-overlay";
 		}
 		
-		if($other_slider) :
+		if( !empty($smart_slider_3) ) {
+			$other_slider = '[smartslider3 slider='.$smart_slider_3.']';
+		}
+		
+		if( $other_slider ) :
 		?>
 		
         <div class="other-slider" style="">
 	       	<?php echo do_shortcode( htmlspecialchars_decode($other_slider) ) ?>
         </div>
 		
-		<?php	
-		elseif ( ( is_home() && !is_paged() ) || $show_slider || ( is_front_page() && !$show_slider ) ) : 
+		<?php
+	
+		elseif ( ( is_home() && !is_paged() ) || $header_type == '2' || $header_type == '3' ) : 
 		?>
             <?php if ( !empty($other_front_slider) && is_home() ) : ?>
             <div id="ibanner">
             	<?php echo do_shortcode( htmlspecialchars_decode($other_front_slider) ) ?>
             </div>    
-        	<?php elseif ( $hide_front_slider != 0 || $show_slider ) : ?>
+        	<?php elseif ( ( is_home() && $hide_front_slider != 0 ) || $header_type == '3' ) : ?>
             <div id="ibanner">
             	<?php iamaze_ibanner_slider(); ?>
             </div>
@@ -200,7 +252,7 @@ global $post;
                     </div>                
                 </div>             
                 <?php endif; ?> 
-                <div class="titlebar">
+                <div class="titlebar vtitle-tagline">
                     <h1 class="entry-title">
                         <?php
                             if ($itrans_slogan) {
@@ -220,9 +272,9 @@ global $post;
         	<?php endif; ?>            
             
         <?php 
-		elseif(!$hide_title) : 
+		elseif( $header_type != '0' ) : 
 		?>
-        <div class="iheader" style="">
+        <div class="iheader nx-titlebar" style="">
         	<div class="titlebar">
             	
                 <?php

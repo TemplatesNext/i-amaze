@@ -39,7 +39,10 @@ function iamaze_ibanner_slider () {
 	
 	$template_dir = get_template_directory_uri();
 	$banner_text = esc_attr(get_theme_mod('banner_text', ''));
-	$slider_height = intval(get_theme_mod('slider_height', 100));	
+	$slider_height = intval(get_theme_mod('slider_height', 100));
+	$slider_reduct = intval(get_theme_mod('slider_reduction', 0));	
+	$nxs_class = esc_attr(get_theme_mod('itrans_style', 'nxs-amaze18'));	
+	
 	
 	$upload_dir = wp_upload_dir();
 	$upload_base_dir = $upload_dir['basedir'];
@@ -69,7 +72,7 @@ function iamaze_ibanner_slider () {
 	$slides_preset = array (
         array(
             'itrans_slide_title' => esc_attr__( 'Welcome To i-AMAZE', 'i-amaze' ),
-            'itrans_slide_desc' => esc_attr__( 'To start setting up i-one go to appearance > customize.', 'i-amaze' ),
+            'itrans_slide_desc' => esc_attr__( 'To start setting up I-AMAZe go to appearance > customize.', 'i-amaze' ),
             'itrans_slide_linktext' => esc_attr__( 'Know More', 'i-amaze' ),
             'itrans_slide_linkurl' => '',
             'itrans_slide_image' => esc_url( get_template_directory_uri() . '/images/slide1.jpg' ),
@@ -126,8 +129,8 @@ function iamaze_ibanner_slider () {
 					$strret .= '<div class="da-img" style="background-image:URL(' . $slide_image_url .');"><div class="nx-tscreen"></div></div>';
 				}
 				$strret .= '<div class="slider-content-wrap"><div class="nx-slider-container">';
-				$strret .= '<h2>'.$slide_title.'</h2>';
-				if( !empty($slide_desc) ){$strret .= '<p>'.htmlspecialchars_decode($slide_desc).'</p>';}
+				$strret .= '<h2>'.do_shortcode(wp_specialchars_decode($slide_title, $quote_style = ENT_QUOTES)).'</h2>';
+				if( !empty($slide_desc) ){$strret .= '<p>'.do_shortcode(wp_specialchars_decode($slide_desc, $quote_style = ENT_QUOTES)).'</p>';}
 				if( !empty($slide_linktext) ){$strret .= '<a href="'.$slide_linkurl.'" class="da-link">'.$slide_linktext.'</a>';}
 				$strret .= '</div></div>';
 			}
@@ -144,8 +147,8 @@ function iamaze_ibanner_slider () {
 	$sliderscpeed = intval(esc_attr(get_theme_mod('itrans_sliderspeed', '6'))) * 1000 ;		
 	
 	if( count( $arrslidestxt) > 0 ){
-		echo '<div class="ibanner ' . esc_attr($overlayclass) . ' ' . esc_attr($ubarclass) . '">';
-		echo '	<div id="da-slider" class="da-slider" role="banner" data-slider-speed="'.esc_attr($sliderscpeed).'" data-slider-parallax="'.esc_attr($itrans_sliderparallax).'" data-edit-slides="'.esc_attr($shortcut_text).'" data-slider-height="'.esc_attr($slider_height).'">';
+		echo '<div class="ibanner ' . esc_attr($overlayclass) . ' ' . esc_attr($ubarclass) . ' ' . $nxs_class . '">';
+		echo '	<div id="da-slider" class="da-slider" role="banner" data-slider-speed="'.esc_attr($sliderscpeed).'" data-slider-parallax="'.esc_attr($itrans_sliderparallax).'" data-edit-slides="'.esc_attr($shortcut_text).'" data-slider-height="'.esc_attr($slider_height).'" data-slider-reduct="'.esc_attr($slider_reduct).'">';
 			
 		foreach ( $arrslidestxt as $slidetxt ) :
 			echo '<div class="nx-slider">';	
@@ -218,3 +221,86 @@ function iamaze_get_video_id( $video_url ){
 	}
 }
 
+
+/* Demo import by One Click Demo Import */
+// include get_template_directory() . '/inc/one-click-demo-import/one-click-demo-import.php';
+
+function iexcel_import_files() {
+  return array(
+  	/**/
+    array(
+      'import_file_name'             	=> 'i-amaze Business Demo 1',
+      'import_file_url'            		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-wordpress-1.xml',
+      //'import_widget_file_url'     		=> 'https://raw.githubusercontent.com/TemplatesNext/i-excel-demo/master/i-excel-widgets.wie',
+      'import_customizer_file_url' 		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-customizer-1.dat',
+      'import_preview_image_url'     	=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-demo-1.jpg',
+      'import_notice'                	=> __( 'Please make sure you have plugin "TemplatesNext OnePagert" installed and active before you start the import process. <br> This process involves transfer of data and media from server to server and might take some time.', 'i-amaze' ),
+	  'preview_url'                		=> 'http://templatesnext.in/i-amaze-business-1/',
+    ),
+
+    array(
+      'import_file_name'             	=> 'i-amaze Demo WooCommere 1',
+      'import_file_url'            		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-wordpress-2.xml',
+      //'import_widget_file_url'     		=> 'https://raw.githubusercontent.com/TemplatesNext/i-excel-demo/master/i-excel-widgets.wie',
+      'import_customizer_file_url' 		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-customizer-2.dat',
+      'import_preview_image_url'     	=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-demo-2.jpg',
+      'import_notice'                	=> __( 'Please make sure you have plugin "TemplatesNext OnePagert" and "WooCommerce" installed and active before you start the import process. <br> This process involves transfer of data and media from server to server and might take some time.', 'i-amaze' ),
+	  'preview_url'                		=> 'http://templatesnext.in/i-amaze-woocommerce-1/',
+    ),
+	
+    array(
+      'import_file_name'             	=> 'i-amaze Business Demo 2',
+      'import_file_url'            		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-wordpress-3.xml',
+      //'import_widget_file_url'     		=> 'https://raw.githubusercontent.com/TemplatesNext/i-excel-demo/master/i-excel-widgets.wie',
+      'import_customizer_file_url' 		=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-customizer-3.dat',
+      'import_preview_image_url'     	=> 'https://raw.githubusercontent.com/the-king-of-jq-hills/i-amaze-demo/master/i-amaze-demo-3.jpg',
+      'import_notice'                	=> __( 'Please make sure you have plugin "TemplatesNext OnePagert" installed and active before you start the import process. <br> This process involves transfer of data and media from server to server and might take some time.', 'i-amaze' ),
+	  'preview_url'                		=> 'http://templatesnext.in/i-amaze-business-2/',  
+    ),	
+  );
+}
+add_filter( 'pt-ocdi/import_files', 'iexcel_import_files' );
+
+add_filter( 'pt-ocdi/disable_pt_branding', '__return_true' );
+
+
+function iamaze_after_import_setup($selected_import) {
+	if ( 'i-amaze Business Demo 1' === $selected_import['import_file_name'] ) {
+
+		// Assign menus to their locations.
+		$main_menu = get_term_by( 'name', 'i-amaze Menu', 'nav_menu' );	
+		set_theme_mod( 'nav_menu_locations', array(
+				'primary' => $main_menu->term_id,
+			)
+		);
+		
+	} elseif ( 'i-amaze Demo WooCommere 1' === $selected_import['import_file_name'] ) {
+	
+		// Assign menus to their locations.
+		$main_menu = get_term_by( 'name', 'i-amaze Menu', 'nav_menu' );
+		set_theme_mod( 'nav_menu_locations', array(
+				'primary' => $main_menu->term_id,
+			)
+		);
+	} else {
+	
+		// Assign menus to their locations.
+		$main_menu = get_term_by( 'name', 'i-amaze Menu', 'nav_menu' );
+		set_theme_mod( 'nav_menu_locations', array(
+				'primary' => $main_menu->term_id,
+			)
+		);
+	}
+
+}
+add_action( 'pt-ocdi/after_import', 'iamaze_after_import_setup' );
+/**/
+add_filter( 'pt-ocdi/regenerate_thumbnails_in_content_import', '__return_false' );
+
+/* change title for page and menu */
+function iamaze_plugin_page_setup( $default_settings ) {
+    $default_settings['page_title']  = esc_html__( 'i-amaze One Click Demo Setup', 'i-amaze' );
+    $default_settings['menu_title']  = esc_html__( 'i-AMAZE Demo Setup' ,'i-amaze' );
+    return $default_settings;
+}
+add_filter( 'pt-ocdi/plugin_page_setup', 'iamaze_plugin_page_setup' );
